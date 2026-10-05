@@ -8,7 +8,7 @@ import { frames, questions, services, steps, studio, valleys } from "@/lib/studi
 export default function Home() {
   return (
     <main id="content" className="flex-1">
-      <section className="mx-auto grid w-full max-w-6xl items-end gap-10 px-5 pt-12 pb-14 md:px-8 md:pt-16 lg:grid-cols-12 lg:gap-12 lg:pb-20">
+      <section className="mx-auto grid w-full max-w-6xl items-center gap-10 px-5 pt-12 pb-14 md:px-8 md:pt-16 lg:grid-cols-12 lg:gap-12 lg:pb-20">
         <div className="lg:col-span-6 lg:pb-4">
           <p className="text-[0.72rem] font-medium uppercase tracking-[0.22em] text-primary">
             {studio.descriptor} · {studio.city}, {studio.region}
@@ -40,22 +40,28 @@ export default function Home() {
           </div>
         </div>
 
-        <figure className="lg:col-span-6">
-          <div className="relative aspect-[4/5] overflow-hidden bg-muted">
-            <Image
-              src="/images/hero.jpg"
-              alt="A hand-held bouquet of cream and apricot roses, purple blooms, eucalyptus, and red berries."
-              fill
-              priority
-              sizes="(min-width: 1024px) 46vw, 100vw"
-              className="object-cover"
-            />
-          </div>
-          <figcaption className="mt-3 flex items-baseline justify-between gap-4 text-sm text-muted-foreground">
-            <span>Cream roses, berries, and eucalyptus</span>
-            <span className="shrink-0 text-[0.68rem] uppercase tracking-[0.16em]">
-              Reference
-            </span>
+        <figure className="mx-auto w-full max-w-[427px] lg:col-span-5 lg:col-start-8 lg:justify-self-end">
+          <Image
+            src="/images/brand.png"
+            alt="Vine & Bloom floral design poster: a barrel of autumn roses, dahlias, and grapes above a Healdsburg vineyard, lettered Healdsburg, California."
+            width={427}
+            height={640}
+            priority
+            className="h-auto w-full"
+          />
+          <figcaption className="mt-4 flex flex-col gap-1 text-sm">
+            <a
+              className="text-foreground underline decoration-border underline-offset-4 hover:decoration-primary"
+              href={`mailto:${studio.email}`}
+            >
+              {studio.email}
+            </a>
+            <a
+              className="text-foreground/80 hover:text-foreground"
+              href={studio.phoneHref}
+            >
+              {studio.phone}
+            </a>
           </figcaption>
         </figure>
       </section>
@@ -324,6 +330,19 @@ export default function Home() {
                     href={`mailto:${studio.email}`}
                   >
                     {studio.email}
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[0.68rem] uppercase tracking-[0.16em] text-[#f0ddd4]">
+                  Phone
+                </dt>
+                <dd className="mt-1">
+                  <a
+                    className="text-lg underline decoration-white/30 underline-offset-4 hover:decoration-white"
+                    href={studio.phoneHref}
+                  >
+                    {studio.phone}
                   </a>
                 </dd>
               </div>

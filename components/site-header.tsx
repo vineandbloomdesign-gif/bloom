@@ -45,13 +45,21 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <Button
-          nativeButton={false}
-          render={<a href="#visit" />}
-          className="hidden h-10 rounded-md px-4 md:inline-flex"
-        >
-          Inquire
-        </Button>
+        <div className="hidden items-center gap-4 md:flex">
+          <a
+            href={studio.phoneHref}
+            className="hidden text-sm text-foreground/80 hover:text-foreground lg:inline"
+          >
+            {studio.phone}
+          </a>
+          <Button
+            nativeButton={false}
+            render={<a href="#visit" />}
+            className="h-10 rounded-md px-4"
+          >
+            Inquire
+          </Button>
+        </div>
 
         <Sheet>
           <SheetTrigger
@@ -95,7 +103,16 @@ export function SiteHeader() {
                 </SheetClose>
               ))}
             </nav>
-            <div className="mt-auto p-4">
+            <div className="mt-auto flex flex-col gap-3 p-4">
+              <a
+                className="text-sm text-foreground underline decoration-border underline-offset-4"
+                href={`mailto:${studio.email}`}
+              >
+                {studio.email}
+              </a>
+              <a className="text-sm text-foreground" href={studio.phoneHref}>
+                {studio.phone}
+              </a>
               <SheetClose
                 nativeButton={false}
                 render={<a href="#visit" className="block" />}

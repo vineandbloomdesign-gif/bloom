@@ -15,11 +15,11 @@ Open [http://127.0.0.1:43123](http://127.0.0.1:43123).
 
 Most of the words live in [`lib/studio.ts`](lib/studio.ts):
 
-- Studio name, city, hours, and email
+- Studio name, city, hours, email, and phone
 - Services, seasons, questions, and the steps of a gathering
 - Photo captions and alt text
 
-Replace `studio.email` with the inbox you actually read before you publish. The inquiry form does not send mail from a server. It opens the visitor’s email app with the note addressed to that inbox, and it keeps a copy of the note on the page if the app does not open.
+Inquiries open the visitor’s email app addressed to vineandbloomdesign@gmail.com. The site does not send or store messages on a server. Calls go to (707) 321-1296.
 
 ## Replace the photographs
 
@@ -27,7 +27,7 @@ The pictures in `public/images` are reference photographs, labeled as such on th
 
 | File | Used for |
 | --- | --- |
-| `hero.jpg` | Opening bouquet |
+| `brand.png` | Opening poster |
 | `jar.jpg` | Studio section |
 | `sonoma.jpg` and `og.jpg` | Vineyard band and link previews |
 | `arch.jpg`, `bouquet.jpg`, `roses.jpg`, `white.jpg`, `golden.jpg`, `table.jpg` | Mood gallery |

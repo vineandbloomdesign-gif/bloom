@@ -1,14 +1,13 @@
 /**
  * Vine&Bloom site copy.
  *
- * Change the studio email before you publish. The inquiry form opens the
- * visitor's email app addressed to `studio.email`. This site does not send
- * or store messages.
+ * The inquiry form opens the visitor's email app addressed to `studio.email`.
+ * This site does not send or store messages.
  *
  * Photographs are reference images (Unsplash) while the studio builds its
  * own portfolio. Swap the files in `public/images` and update `alt` text here.
  * Sources:
- * - hero: photo-1487530811176-3780de880c2d
+ * - brand.png: studio poster (supplied artwork)
  * - jar: photo-1563241527-3004b7be0ffd
  * - sonoma: photo-1761067673321-1874c9bb391f (Sonoma, CA)
  * - arch: photo-1529636798458-92182e662485
@@ -24,7 +23,9 @@ export const studio = {
   descriptor: "Floral design studio",
   city: "Healdsburg",
   region: "California",
-  email: "hello@vineandbloom.com",
+  email: "vineandbloomdesign@gmail.com",
+  phone: "(707) 321-1296",
+  phoneHref: "tel:+17073211296",
   hours: "Tuesday–Saturday, by appointment",
   area: "Healdsburg and the valleys nearby",
 } as const

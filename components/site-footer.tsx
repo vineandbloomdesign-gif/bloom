@@ -33,10 +33,16 @@ export function SiteFooter() {
 
         <div className="text-sm leading-relaxed text-muted-foreground md:text-right">
           <a
-            className="text-foreground underline decoration-border underline-offset-4 hover:decoration-primary"
+            className="block text-foreground underline decoration-border underline-offset-4 hover:decoration-primary"
             href={`mailto:${studio.email}`}
           >
             {studio.email}
+          </a>
+          <a
+            className="mt-1 block text-foreground hover:text-primary"
+            href={studio.phoneHref}
+          >
+            {studio.phone}
           </a>
           <p className="mt-2">{studio.hours}</p>
           <p className="mt-6 text-xs">
