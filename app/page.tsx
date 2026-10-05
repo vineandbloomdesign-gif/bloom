@@ -8,7 +8,7 @@ import { frames, questions, services, steps, studio, valleys } from "@/lib/studi
 export default function Home() {
   return (
     <main id="content" className="flex-1">
-      <section className="mx-auto grid w-full max-w-6xl items-center gap-10 px-5 pt-12 pb-14 md:px-8 md:pt-16 lg:grid-cols-12 lg:gap-12 lg:pb-20">
+      <section className="mx-auto grid w-full max-w-6xl items-end gap-10 px-5 pt-12 pb-14 md:px-8 md:pt-16 lg:grid-cols-12 lg:gap-12 lg:pb-20">
         <div className="lg:col-span-6 lg:pb-4">
           <p className="text-[0.72rem] font-medium uppercase tracking-[0.22em] text-primary">
             {studio.descriptor} · {studio.city}, {studio.region}
@@ -40,28 +40,22 @@ export default function Home() {
           </div>
         </div>
 
-        <figure className="mx-auto w-full max-w-[427px] lg:col-span-5 lg:col-start-8 lg:justify-self-end">
-          <Image
-            src="/images/brand.png"
-            alt="Vine & Bloom floral design poster: a barrel of autumn roses, dahlias, and grapes above a Healdsburg vineyard, lettered Healdsburg, California."
-            width={427}
-            height={640}
-            priority
-            className="h-auto w-full"
-          />
-          <figcaption className="mt-4 flex flex-col gap-1 text-sm">
-            <a
-              className="text-foreground underline decoration-border underline-offset-4 hover:decoration-primary"
-              href={`mailto:${studio.email}`}
-            >
-              {studio.email}
-            </a>
-            <a
-              className="text-foreground/80 hover:text-foreground"
-              href={studio.phoneHref}
-            >
-              {studio.phone}
-            </a>
+        <figure className="lg:col-span-6">
+          <div className="relative aspect-[4/5] overflow-hidden bg-muted">
+            <Image
+              src="/images/hero.jpg"
+              alt="A hand-held bouquet of cream and apricot roses, purple blooms, eucalyptus, and red berries."
+              fill
+              priority
+              sizes="(min-width: 1024px) 46vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+          <figcaption className="mt-3 flex items-baseline justify-between gap-4 text-sm text-muted-foreground">
+            <span>Cream roses, berries, and eucalyptus</span>
+            <span className="shrink-0 text-[0.68rem] uppercase tracking-[0.16em]">
+              Reference
+            </span>
           </figcaption>
         </figure>
       </section>
@@ -78,20 +72,17 @@ export default function Home() {
       </div>
 
       <section id="studio" className="mx-auto grid w-full max-w-6xl gap-10 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-12 lg:items-center lg:gap-16">
-        <figure className="lg:col-span-5">
-          <div className="relative aspect-[3/4] overflow-hidden bg-muted">
+        <div className="lg:col-span-5">
+          <div className="relative aspect-[4/5] overflow-hidden bg-muted">
             <Image
-              src="/images/garden.jpg"
-              alt="A brick path through a Healdsburg garden, lined with red, pink, and white roses under a clear blue sky."
+              src="/images/jar.jpg"
+              alt="A jar of blush garden roses, peony, and eucalyptus tied with a silk ribbon, sitting on a wooden table."
               fill
               sizes="(min-width: 1024px) 38vw, 100vw"
               className="object-cover"
             />
           </div>
-          <figcaption className="mt-4 font-heading text-2xl leading-snug tracking-tight text-foreground italic md:text-[1.7rem]">
-            {studio.gardenLine}
-          </figcaption>
-        </figure>
+        </div>
         <div className="lg:col-span-6 lg:col-start-7">
           <p className="text-[0.72rem] font-medium uppercase tracking-[0.22em] text-primary">
             The studio
@@ -258,9 +249,9 @@ export default function Home() {
             The feeling of the work.
           </h2>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            The casket spray is from the studio table. The other photographs
-            are the mood we design toward, until more of our own gatherings
-            take their place.
+            Vine&Bloom is just opening. These photographs are the mood we
+            design toward. As real gatherings are set, they will take this
+            place on the page.
           </p>
         </div>
         <ul className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-12">
@@ -276,7 +267,7 @@ export default function Home() {
                 />
                 <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent p-4 pt-16 text-[#faf6f1]">
                   <span className="block text-[0.65rem] uppercase tracking-[0.16em] text-white/75">
-                    {"note" in frame ? frame.note : "Reference"}
+                    Reference
                   </span>
                   <span className="mt-1 block text-sm">{frame.caption}</span>
                 </figcaption>

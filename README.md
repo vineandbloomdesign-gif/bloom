@@ -15,11 +15,11 @@ Open [http://127.0.0.1:43123](http://127.0.0.1:43123).
 
 Most of the words live in [`lib/studio.ts`](lib/studio.ts):
 
-- Studio name, city, hours, email, and phone
+- Studio name, city, hours, and email
 - Services, seasons, questions, and the steps of a gathering
 - Photo captions and alt text
 
-Inquiries open the visitor’s email app addressed to vineandbloomdesign@gmail.com. The site does not send or store messages on a server. Calls go to (707) 321-1296.
+The inquiry form does not send mail from a server. It opens the visitor’s email app with the note addressed to `vineandbloomdesign@gmail.com`, and it keeps a copy of the note on the page if the app does not open. The studio phone is (707) 321-1296.
 
 ## Replace the photographs
 
@@ -27,12 +27,10 @@ The pictures in `public/images` are reference photographs, labeled as such on th
 
 | File | Used for |
 | --- | --- |
-| `brand.png` | Opening poster |
-| `logo.png` | Barrel logo in the header and footer |
-| `garden.jpg` | Healdsburg garden, beside the studio story |
-| `memorial.jpg` | Memorial services |
+| `hero.jpg` | Opening bouquet |
+| `jar.jpg` | Studio section |
 | `sonoma.jpg` and `og.jpg` | Vineyard band and link previews |
-| `casket.jpg`, `hero.jpg`, `arch.jpg`, `bouquet.jpg`, `roses.jpg`, `white.jpg`, `golden.jpg`, `table.jpg` | Work gallery |
+| `arch.jpg`, `bouquet.jpg`, `roses.jpg`, `white.jpg`, `golden.jpg`, `table.jpg` | Mood gallery |
 
 ## Share previews
 

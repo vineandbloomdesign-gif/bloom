@@ -57,7 +57,7 @@ const jsonLd = {
   name: studio.name,
   description,
   email: studio.email,
-  telephone: "+1-707-321-1296",
+  telephone: studio.phoneHref.replace("tel:", ""),
   address: {
     "@type": "PostalAddress",
     addressLocality: studio.city,
