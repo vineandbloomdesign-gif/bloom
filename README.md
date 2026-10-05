@@ -32,7 +32,7 @@ The pictures in `public/images` are reference photographs, labeled as such on th
 | `garden.jpg` | Healdsburg garden, beside the studio story |
 | `memorial.jpg` | Memorial services |
 | `sonoma.jpg` and `og.jpg` | Vineyard band and link previews |
-| `hero.jpg`, `arch.jpg`, `bouquet.jpg`, `roses.jpg`, `white.jpg`, `golden.jpg`, `table.jpg` | Mood gallery |
+| `casket.jpg`, `hero.jpg`, `arch.jpg`, `bouquet.jpg`, `roses.jpg`, `white.jpg`, `golden.jpg`, `table.jpg` | Work gallery |
 
 ## Share previews
 

@@ -11,6 +11,7 @@
  * - logo.png: barrel logo
  * - garden.jpg: the studio garden in Healdsburg
  * - memorial.jpg: graveside flowers for memorial services
+ * - casket.jpg: casket spray on the work table
  * - hero: photo-1487530811176-3780de880c2d
  * - jar: photo-1563241527-3004b7be0ffd
  * - sonoma: photo-1761067673321-1874c9bb391f (Sonoma, CA)
@@ -128,6 +129,14 @@ export function seasonForDate(date: Date): SeasonId {
 }
 
 export const frames = [
+  {
+    src: "/images/casket.jpg",
+    alt: "A casket spray of white lilies, roses, hydrangea, and calla lilies laid across a work table, with vases of stock and carnations beside it.",
+    caption: "Casket spray",
+    note: "Studio work",
+    className: "sm:col-span-12",
+    aspect: "aspect-[4/3]",
+  },
   {
     src: "/images/hero.jpg",
     alt: "A hand-held bouquet of cream and apricot roses, purple blooms, eucalyptus, and red berries.",

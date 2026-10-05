@@ -258,9 +258,9 @@ export default function Home() {
             The feeling of the work.
           </h2>
           <p className="text-lg leading-relaxed text-muted-foreground">
-            Vine&Bloom is just opening. These photographs are the mood we
-            design toward. As real gatherings are set, they will take this
-            place on the page.
+            The casket spray is from the studio table. The other photographs
+            are the mood we design toward, until more of our own gatherings
+            take their place.
           </p>
         </div>
         <ul className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-12">
@@ -276,7 +276,7 @@ export default function Home() {
                 />
                 <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent p-4 pt-16 text-[#faf6f1]">
                   <span className="block text-[0.65rem] uppercase tracking-[0.16em] text-white/75">
-                    Reference
+                    {"note" in frame ? frame.note : "Reference"}
                   </span>
                   <span className="mt-1 block text-sm">{frame.caption}</span>
                 </figcaption>
