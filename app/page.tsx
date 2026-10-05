@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 
 import { InquiryForm } from "@/components/inquiry-form"
 import { Button } from "@/components/ui/button"
@@ -13,8 +14,10 @@ export default function Home() {
           <p className="text-[0.72rem] font-medium uppercase tracking-[0.22em] text-primary">
             {studio.descriptor} · {studio.city}, {studio.region}
           </p>
-          <h1 className="mt-5 max-w-[12ch] font-heading text-[clamp(3.4rem,7.2vw,6.5rem)] leading-[0.9] tracking-[-0.035em] text-foreground">
-            Flowers for the <em className="font-light italic">long table.</em>
+          <h1 className="mt-5 max-w-[12em] font-heading text-[clamp(2.55rem,4.8vw,4.15rem)] leading-[0.98] tracking-[-0.03em] text-foreground">
+            Flowers for the special{" "}
+            <em className="font-light italic">Moments</em> we hold in our
+            hearts
           </h1>
           <p className="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground">
             Vine&Bloom composes seasonal flowers for winery weddings, estate
@@ -156,6 +159,16 @@ export default function Home() {
           <h2 className="mt-4 font-heading text-4xl leading-[1.05] tracking-tight md:text-5xl">
             Five kinds of days.
           </h2>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+            For a bouquet from the studio,{" "}
+            <Link
+              href="/order"
+              className="text-foreground underline decoration-border underline-offset-4 hover:decoration-primary"
+            >
+              order by the stem
+            </Link>{" "}
+            and set the time it will be ready for pickup.
+          </p>
         </div>
         <ol className="mt-12 border-t border-border">
           {services.map((service) => (

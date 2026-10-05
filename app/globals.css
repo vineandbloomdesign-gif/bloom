@@ -151,3 +151,15 @@
 section[id] {
   scroll-margin-top: 5.5rem;
 }
+
+@media print {
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+  }
+}

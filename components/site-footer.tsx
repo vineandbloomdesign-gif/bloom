@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 import { Mark } from "@/components/mark"
 import { nav, studio } from "@/lib/studio"
 
@@ -6,12 +8,12 @@ export function SiteFooter() {
     <footer className="border-t border-border bg-background">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-5 py-12 md:flex-row md:items-end md:justify-between md:px-8">
         <div>
-          <a href="#top" className="inline-flex items-center gap-2.5">
+          <Link href="/" className="inline-flex items-center gap-2.5">
             <Mark className="size-12 shrink-0 rounded-full" />
             <span className="font-heading text-2xl tracking-tight">
               Vine<span className="italic text-primary">&</span>Bloom
             </span>
-          </a>
+          </Link>
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
             {studio.descriptor}
             <br />
@@ -21,13 +23,13 @@ export function SiteFooter() {
 
         <nav className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Footer">
           {nav.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               className="text-sm text-foreground/75 hover:text-foreground"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 

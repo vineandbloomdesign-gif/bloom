@@ -21,6 +21,8 @@ Most of the words live in [`lib/studio.ts`](lib/studio.ts):
 
 The inquiry form does not send mail from a server. It opens the visitor’s email app with the note addressed to `vineandbloomdesign@gmail.com`, and it keeps a copy of the note on the page if the app does not open. The studio phone is (707) 321-1296.
 
+Walk-in orders live at `/order`. Stem prices are in [`lib/stems.ts`](lib/stems.ts). The page totals each stem, and the ready time is limited to Tuesday–Saturday, 10:00 AM–5:00 PM Pacific. Placing an order opens an email to the studio with the slip. Nothing is stored on the website.
+
 ## Replace the photographs
 
 The pictures in `public/images` are reference photographs, labeled as such on the page, while the studio collects its own work. Swap the files and update the matching `alt` text in `lib/studio.ts`.

@@ -33,12 +33,13 @@ export const studio = {
 } as const
 
 export const nav = [
-  { href: "#studio", label: "Studio" },
-  { href: "#services", label: "Services" },
-  { href: "#memorial", label: "Memorial" },
-  { href: "#seasons", label: "Seasons" },
-  { href: "#mood", label: "Mood" },
-  { href: "#visit", label: "Visit" },
+  { href: "/#studio", label: "Studio" },
+  { href: "/#services", label: "Services" },
+  { href: "/#memorial", label: "Memorial" },
+  { href: "/#seasons", label: "Seasons" },
+  { href: "/#mood", label: "Mood" },
+  { href: "/order", label: "Order" },
+  { href: "/#visit", label: "Visit" },
 ] as const
 
 export const valleys = [

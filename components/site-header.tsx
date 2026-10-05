@@ -1,6 +1,7 @@
 "use client"
 
 import { MenuIcon } from "lucide-react"
+import Link from "next/link"
 
 import { Mark } from "@/components/mark"
 import { Button } from "@/components/ui/button"
@@ -22,35 +23,32 @@ export function SiteHeader() {
       className="sticky top-0 z-40 border-b border-border/80 bg-background/85 backdrop-blur-md"
     >
       <div className="mx-auto flex h-[4.25rem] w-full max-w-6xl items-center justify-between gap-4 px-5 md:px-8">
-        <a
-          href="#top"
-          className="flex items-center gap-2.5 text-foreground"
-        >
+        <Link href="/" className="flex items-center gap-2.5 text-foreground">
           <Mark className="size-11 shrink-0 rounded-full" />
           <span className="font-heading text-[1.35rem] leading-none tracking-tight">
             Vine<span className="italic text-primary">&</span>Bloom
           </span>
           <span className="sr-only">, home</span>
-        </a>
+        </Link>
 
-        <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-5 xl:gap-7 lg:flex" aria-label="Primary">
           {nav.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               className="text-sm text-foreground/75 transition-colors hover:text-foreground"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
         <Button
           nativeButton={false}
-          render={<a href="#visit" />}
-          className="hidden h-10 rounded-md px-4 md:inline-flex"
+          render={<Link href="/order" />}
+          className="hidden h-10 rounded-md px-4 lg:inline-flex"
         >
-          Inquire
+          Order stems
         </Button>
 
         <Sheet>
@@ -60,7 +58,7 @@ export function SiteHeader() {
               <Button
                 variant="outline"
                 size="icon"
-                className="md:hidden"
+                className="lg:hidden"
                 aria-label="Open menu"
               />
             }
@@ -85,7 +83,7 @@ export function SiteHeader() {
                   key={item.href}
                   nativeButton={false}
                   render={
-                    <a
+                    <Link
                       href={item.href}
                       className="border-b border-border py-4 font-heading text-3xl tracking-tight text-foreground"
                     />
@@ -98,10 +96,10 @@ export function SiteHeader() {
             <div className="mt-auto p-4">
               <SheetClose
                 nativeButton={false}
-                render={<a href="#visit" className="block" />}
+                render={<Link href="/order" className="block" />}
               >
                 <Button className="h-12 w-full rounded-md text-base">
-                  Inquire
+                  Order stems
                 </Button>
               </SheetClose>
             </div>
