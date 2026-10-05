@@ -26,7 +26,7 @@ export function SiteHeader() {
           href="#top"
           className="flex items-center gap-2.5 text-foreground"
         >
-          <Mark className="size-8 text-primary" />
+          <Mark className="size-11 shrink-0 rounded-full" />
           <span className="font-heading text-[1.35rem] leading-none tracking-tight">
             Vine<span className="italic text-primary">&</span>Bloom
           </span>

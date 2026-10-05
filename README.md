@@ -28,9 +28,10 @@ The pictures in `public/images` are reference photographs, labeled as such on th
 | File | Used for |
 | --- | --- |
 | `brand.png` | Opening poster |
+| `logo.png` | Barrel logo in the header and footer |
 | `jar.jpg` | Studio section |
 | `sonoma.jpg` and `og.jpg` | Vineyard band and link previews |
-| `arch.jpg`, `bouquet.jpg`, `roses.jpg`, `white.jpg`, `golden.jpg`, `table.jpg` | Mood gallery |
+| `hero.jpg`, `arch.jpg`, `bouquet.jpg`, `roses.jpg`, `white.jpg`, `golden.jpg`, `table.jpg` | Mood gallery |
 
 ## Share previews
 

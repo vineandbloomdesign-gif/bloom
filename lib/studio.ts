@@ -8,6 +8,8 @@
  * own portfolio. Swap the files in `public/images` and update `alt` text here.
  * Sources:
  * - brand.png: studio poster (supplied artwork)
+ * - logo.png: barrel logo
+ * - hero: photo-1487530811176-3780de880c2d
  * - jar: photo-1563241527-3004b7be0ffd
  * - sonoma: photo-1761067673321-1874c9bb391f (Sonoma, CA)
  * - arch: photo-1529636798458-92182e662485
@@ -117,18 +119,25 @@ export function seasonForDate(date: Date): SeasonId {
 
 export const frames = [
   {
+    src: "/images/hero.jpg",
+    alt: "A hand-held bouquet of cream and apricot roses, purple blooms, eucalyptus, and red berries.",
+    caption: "Cream roses, berries, and eucalyptus",
+    className: "sm:col-span-5",
+    aspect: "aspect-[4/5]",
+  },
+  {
     src: "/images/arch.jpg",
     alt: "A wooden ceremony arch draped in ivory cloth and a cascading arrangement of garden roses, with green hills behind it.",
     caption: "Ceremony arch in garden roses",
     className: "sm:col-span-7",
-    aspect: "aspect-[4/3]",
+    aspect: "aspect-[4/3] sm:aspect-auto sm:h-full",
   },
   {
     src: "/images/bouquet.jpg",
     alt: "A hand-tied bouquet of white carnations, cream roses, a blush bloom, and eucalyptus, resting on lace.",
     caption: "Hand-tied bouquet in cream and blush",
-    className: "sm:col-span-5",
-    aspect: "aspect-[4/3] sm:aspect-auto sm:h-full",
+    className: "sm:col-span-4",
+    aspect: "aspect-[3/4]",
   },
   {
     src: "/images/roses.jpg",
@@ -148,8 +157,8 @@ export const frames = [
     src: "/images/golden.jpg",
     alt: "Grapevines in golden hour light, with leaves turning yellow and rust.",
     caption: "Harvest light on the vines",
-    className: "sm:col-span-4",
-    aspect: "aspect-[3/4]",
+    className: "sm:col-span-12",
+    aspect: "aspect-[16/10] sm:aspect-[21/9]",
   },
   {
     src: "/images/table.jpg",

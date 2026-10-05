@@ -7,7 +7,7 @@ export function SiteFooter() {
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-5 py-12 md:flex-row md:items-end md:justify-between md:px-8">
         <div>
           <a href="#top" className="inline-flex items-center gap-2.5">
-            <Mark className="size-8 text-primary" />
+            <Mark className="size-12 shrink-0 rounded-full" />
             <span className="font-heading text-2xl tracking-tight">
               Vine<span className="italic text-primary">&</span>Bloom
             </span>
