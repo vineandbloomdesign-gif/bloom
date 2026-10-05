@@ -163,7 +163,7 @@ export default function Home() {
             What we design
           </p>
           <h2 className="mt-4 font-heading text-4xl leading-[1.05] tracking-tight md:text-5xl">
-            Four kinds of days.
+            Five kinds of days.
           </h2>
         </div>
         <ol className="mt-12 border-t border-border">
@@ -184,6 +184,51 @@ export default function Home() {
             </li>
           ))}
         </ol>
+      </section>
+
+      <section id="memorial" className="border-t border-border">
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-12 lg:gap-16">
+          <figure className="lg:col-span-5">
+            <div className="relative aspect-[3/4] overflow-hidden bg-muted">
+              <Image
+                src="/images/memorial.jpg"
+                alt="Graveside flowers: red roses and sunflowers beside headstones, with a wrapped bouquet on the grass."
+                fill
+                sizes="(min-width: 1024px) 38vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+            <figcaption className="mt-4 font-heading text-2xl leading-snug tracking-tight text-foreground italic md:text-[1.7rem]">
+              {studio.memorialLine}
+            </figcaption>
+          </figure>
+          <div className="lg:col-span-6 lg:col-start-7">
+            <p className="text-[0.72rem] font-medium uppercase tracking-[0.22em] text-primary">
+              Memorial services
+            </p>
+            <h2 className="mt-4 font-heading text-4xl leading-[1.05] tracking-tight md:text-5xl">
+              Flowers for the people we keep.
+            </h2>
+            <div className="mt-6 space-y-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+              <p>
+                We design for the service, the home, and the graveside. A
+                spray, a standing arrangement, or a bouquet you set down by
+                hand.
+              </p>
+              <p>
+                Tell us the day and the place. If the time is short, write
+                anyway. We will do what the day allows.
+              </p>
+            </div>
+            <Button
+              nativeButton={false}
+              render={<a href="#visit" />}
+              className="mt-8 h-12 rounded-md px-6 text-base hover:bg-wine-deep"
+            >
+              Plan a memorial
+            </Button>
+          </div>
+        </div>
       </section>
 
       <section id="seasons" className="border-y border-border bg-muted/50">

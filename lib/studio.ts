@@ -10,6 +10,7 @@
  * - brand.png: studio poster (supplied artwork)
  * - logo.png: barrel logo
  * - garden.jpg: the studio garden in Healdsburg
+ * - memorial.jpg: graveside flowers for memorial services
  * - hero: photo-1487530811176-3780de880c2d
  * - jar: photo-1563241527-3004b7be0ffd
  * - sonoma: photo-1761067673321-1874c9bb391f (Sonoma, CA)
@@ -32,11 +33,13 @@ export const studio = {
   hours: "Tuesday–Saturday, by appointment",
   area: "Healdsburg and the valleys nearby",
   gardenLine: "In Healdsburg Garden we find the color to paint your picture.",
+  memorialLine: "Loved by many, forgotten by none.",
 } as const
 
 export const nav = [
   { href: "#studio", label: "Studio" },
   { href: "#services", label: "Services" },
+  { href: "#memorial", label: "Memorial" },
   { href: "#seasons", label: "Seasons" },
   { href: "#mood", label: "Mood" },
   { href: "#visit", label: "Visit" },
@@ -67,6 +70,11 @@ export const services = [
   },
   {
     number: "04",
+    title: "Memorial services",
+    copy: "Sprays, standing arrangements, and a bouquet to set down by hand. For the service, the home, and the graveside.",
+  },
+  {
+    number: "05",
     title: "Weekly flowers",
     copy: "A standing arrangement for a home or a tasting room in Healdsburg. The palette changes with the market. Vessels go out and come back.",
   },
@@ -197,7 +205,7 @@ export const steps = [
 export const questions = [
   {
     q: "How early should we get in touch?",
-    a: "For a wedding, write when the venue is held. For a dinner, two or three weeks is often enough. Weekly flowers can start on the next delivery day.",
+    a: "For a wedding, write when the venue is held. For a dinner, two or three weeks is often enough. For a memorial, write as soon as you know the day. Weekly flowers can start on the next delivery day.",
   },
   {
     q: "Where do you work?",
@@ -217,6 +225,7 @@ export const occasions = [
   "Wedding",
   "Winery or estate gathering",
   "Private dinner",
+  "Memorial service",
   "Weekly flowers",
   "Something else",
 ] as const

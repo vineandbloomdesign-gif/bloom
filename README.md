@@ -30,6 +30,7 @@ The pictures in `public/images` are reference photographs, labeled as such on th
 | `brand.png` | Opening poster |
 | `logo.png` | Barrel logo in the header and footer |
 | `garden.jpg` | Healdsburg garden, beside the studio story |
+| `memorial.jpg` | Memorial services |
 | `sonoma.jpg` and `og.jpg` | Vineyard band and link previews |
 | `hero.jpg`, `arch.jpg`, `bouquet.jpg`, `roses.jpg`, `white.jpg`, `golden.jpg`, `table.jpg` | Mood gallery |
 
