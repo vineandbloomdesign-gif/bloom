@@ -9,6 +9,7 @@
  * Sources:
  * - brand.png: studio poster (supplied artwork)
  * - logo.png: barrel logo
+ * - garden.jpg: the studio garden in Healdsburg
  * - hero: photo-1487530811176-3780de880c2d
  * - jar: photo-1563241527-3004b7be0ffd
  * - sonoma: photo-1761067673321-1874c9bb391f (Sonoma, CA)
@@ -30,6 +31,7 @@ export const studio = {
   phoneHref: "tel:+17073211296",
   hours: "Tuesday–Saturday, by appointment",
   area: "Healdsburg and the valleys nearby",
+  gardenLine: "In Healdsburg Garden we find the color to paint your picture.",
 } as const
 
 export const nav = [

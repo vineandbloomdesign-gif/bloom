@@ -78,17 +78,20 @@ export default function Home() {
       </div>
 
       <section id="studio" className="mx-auto grid w-full max-w-6xl gap-10 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-12 lg:items-center lg:gap-16">
-        <div className="lg:col-span-5">
-          <div className="relative aspect-[4/5] overflow-hidden bg-muted">
+        <figure className="lg:col-span-5">
+          <div className="relative aspect-[3/4] overflow-hidden bg-muted">
             <Image
-              src="/images/jar.jpg"
-              alt="A jar of blush garden roses, peony, and eucalyptus tied with a silk ribbon, sitting on a wooden table."
+              src="/images/garden.jpg"
+              alt="A brick path through a Healdsburg garden, lined with red, pink, and white roses under a clear blue sky."
               fill
               sizes="(min-width: 1024px) 38vw, 100vw"
               className="object-cover"
             />
           </div>
-        </div>
+          <figcaption className="mt-4 font-heading text-2xl leading-snug tracking-tight text-foreground italic md:text-[1.7rem]">
+            {studio.gardenLine}
+          </figcaption>
+        </figure>
         <div className="lg:col-span-6 lg:col-start-7">
           <p className="text-[0.72rem] font-medium uppercase tracking-[0.22em] text-primary">
             The studio
