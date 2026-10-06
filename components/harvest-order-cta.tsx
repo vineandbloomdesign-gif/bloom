@@ -1,9 +1,7 @@
 import Image from "next/image"
 
 import { Button } from "@/components/ui/button"
-import { formatMoney } from "@/lib/arrangements"
 import { publicPath } from "@/lib/public-path"
-import { shopItemUrl, shopItems } from "@/lib/shop"
 import { shopUrl, studio } from "@/lib/studio"
 
 export function HarvestOrderCta({ headingId }: { headingId: string }) {
@@ -21,9 +19,8 @@ export function HarvestOrderCta({ headingId }: { headingId: string }) {
             Order now.
           </h2>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            Scan the code, or tap an item, and pay on the {studio.city} shop
-            before pickup. The code opens the full shop: arrangements, roses,
-            stands, and sympathy pieces.
+            Scan the code, or tap it, and pay on the {studio.city} shop
+            before pickup. The link opens everything that is for sale.
           </p>
           <Button
             nativeButton={false}
@@ -53,32 +50,10 @@ export function HarvestOrderCta({ headingId }: { headingId: string }) {
               Order now
             </span>
             <span className="mt-1 block text-center text-sm text-muted-foreground">
-              All items · tap or scan
+              Tap or scan to open the shop
             </span>
           </a>
         </div>
-      </div>
-      <div className="mx-auto w-full max-w-6xl px-5 pb-16 md:px-8 md:pb-20">
-        <p className="text-[0.72rem] font-medium uppercase tracking-[0.22em] text-primary">
-          All items
-        </p>
-        <ul className="mt-4 grid sm:grid-cols-2 sm:gap-x-12">
-          {shopItems.map((item) => (
-            <li key={item.slug} className="border-b border-border">
-              <a
-                href={shopItemUrl(item.slug)}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-baseline justify-between gap-4 py-3 text-base hover:text-primary"
-              >
-                <span>{item.name}</span>
-                <span className="shrink-0 tabular-nums text-primary">
-                  {formatMoney(item.price)}
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
   )
