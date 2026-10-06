@@ -194,16 +194,14 @@ export function WeddingInquiry() {
                     }))
                   }
                 />
-                <span className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                  <span>
-                    <span className="block font-heading text-2xl tracking-tight">
-                      {pkg.name}
-                    </span>
-                    <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">
-                      {pkg.copy}
-                    </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-heading text-2xl tracking-tight">
+                    {pkg.name}
                   </span>
-                  <span className="shrink-0 font-heading text-xl tracking-tight text-primary sm:text-right">
+                  <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">
+                    {pkg.copy}
+                  </span>
+                  <span className="mt-2 block font-heading text-xl tracking-tight text-primary">
                     {packagePriceLabel(pkg)}
                   </span>
                 </span>
