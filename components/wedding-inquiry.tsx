@@ -1,20 +1,21 @@
 "use client"
 
 import { MinusIcon, PlusIcon } from "lucide-react"
-import { useActionState, useEffect, useId, useRef, useState } from "react"
+import { useEffect, useId, useRef, useState, type FormEvent } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { studio } from "@/lib/studio"
-import { requestWedding } from "@/lib/wedding-request"
 import {
+  buildWeddingRequest,
   defaultWeddingCounts,
   packagePriceLabel,
   pieceCount,
   weddingPackages,
   type WeddingCountKey,
+  type WeddingFormState,
 } from "@/lib/wedding"
 
 function openMailbox(href: string) {
@@ -25,7 +26,7 @@ export function WeddingInquiry() {
   const formId = useId()
   const slipRef = useRef<HTMLHeadingElement>(null)
   const opened = useRef(false)
-  const [state, formAction, pending] = useActionState(requestWedding, null)
+  const [state, setState] = useState<WeddingFormState | null>(null)
   const [counts, setCounts] = useState(defaultWeddingCounts)
   const [chosen, setChosen] = useState<Record<string, boolean>>({ basic: true })
   const [copied, setCopied] = useState(false)
@@ -42,6 +43,20 @@ export function WeddingInquiry() {
 
   function changeCount(key: WeddingCountKey, next: number) {
     setCounts((current) => ({ ...current, [key]: next }))
+  }
+
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const next = buildWeddingRequest(new FormData(event.currentTarget))
+    setState(next)
+    if (!next.ok) {
+      const field = Object.keys(next.errors)[0]
+      const name = field === "date" ? "wedding-date" : field === "packages" ? "" : field
+      const target = name
+        ? event.currentTarget.querySelector<HTMLElement>(`[name="${name}"]`)
+        : document.getElementById(`${formId}-packages`)
+      target?.focus()
+    }
   }
 
   async function copySlip() {
@@ -145,7 +160,7 @@ export function WeddingInquiry() {
   return (
     <form
       className="mx-auto grid w-full max-w-6xl gap-12 px-5 pb-24 md:px-8 lg:grid-cols-12 lg:gap-16"
-      action={formAction}
+      onSubmit={onSubmit}
       noValidate
     >
       <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
@@ -386,12 +401,8 @@ export function WeddingInquiry() {
             />
           </div>
 
-          <Button
-            type="submit"
-            className="mt-6 h-12 w-full rounded-md text-base hover:bg-wine-deep"
-            disabled={pending}
-          >
-            {pending ? "Sending the request…" : "Request these packages"}
+          <Button type="submit" className="mt-6 h-12 w-full rounded-md text-base hover:bg-wine-deep">
+            Request these packages
           </Button>
         </div>
       </aside>
