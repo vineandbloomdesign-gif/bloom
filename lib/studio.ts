@@ -30,6 +30,14 @@ export const studio = {
   hours: "Tuesday–Saturday, by appointment",
   area: "Healdsburg and the valleys nearby",
   memorialLine: "Loved by many, forgotten by none.",
+  mapQuery: "Healdsburg, California",
+} as const
+
+const mapQuery = encodeURIComponent(studio.mapQuery)
+
+export const mapLinks = {
+  embed: `https://maps.google.com/maps?q=${mapQuery}&z=14&hl=en&output=embed`,
+  open: `https://www.google.com/maps/search/?api=1&query=${mapQuery}`,
 } as const
 
 export const nav = [
@@ -39,7 +47,7 @@ export const nav = [
   { href: "/#seasons", label: "Seasons" },
   { href: "/#mood", label: "Mood" },
   { href: "/order", label: "Order" },
-  { href: "/#visit", label: "Visit" },
+  { href: "/visit", label: "Visit" },
 ] as const
 
 export const valleys = [

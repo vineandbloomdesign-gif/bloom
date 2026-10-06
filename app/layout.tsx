@@ -3,7 +3,7 @@ import { Fraunces, Outfit } from "next/font/google"
 
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
-import { studio } from "@/lib/studio"
+import { mapLinks, studio } from "@/lib/studio"
 
 import "./globals.css"
 
@@ -65,6 +65,7 @@ const jsonLd = {
     addressCountry: "US",
   },
   areaServed: "Sonoma County",
+  hasMap: mapLinks.open,
 }
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -405,6 +405,12 @@ export default function Home() {
                 <dd className="mt-1 text-lg">{studio.hours}</dd>
               </div>
             </dl>
+            <Link
+              href="/visit"
+              className="mt-8 inline-block text-lg underline decoration-white/30 underline-offset-4 hover:decoration-white"
+            >
+              Map and directions
+            </Link>
           </div>
           <div className="bg-[#f7f3ec] p-5 text-foreground sm:p-8 lg:col-span-7">
             <InquiryForm />
