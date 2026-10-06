@@ -32,6 +32,7 @@ export const studio = {
   phoneHref: "tel:+17073211296",
   hours: "Tuesday–Saturday, by appointment",
   area: "Healdsburg and the valleys nearby",
+  founded: "2026",
   memorialLine: "Loved by many, forgotten by none.",
   mapQuery: "20 Healdsburg Ave, Healdsburg, CA 95448",
 } as const
@@ -44,13 +45,33 @@ export const mapLinks = {
 } as const
 
 export const nav = [
-  { href: "/#studio", label: "Studio" },
+  { href: "/about", label: "About" },
   { href: "/#services", label: "Services" },
   { href: "/#memorial", label: "Memorial" },
   { href: "/#seasons", label: "Seasons" },
   { href: "/#mood", label: "Mood" },
   { href: "/order", label: "Order" },
   { href: "/visit", label: "Visit" },
+] as const
+
+export const founder = {
+  name: "Grace Hayes",
+  role: "Founder, Vine & Bloom Floral",
+  tagline:
+    "Rooted in Healdsburg. Inspired by the land. Growing beauty for generations.",
+  welcome:
+    "Welcome to Vine & Bloom — where every design begins with a story and every bloom has a place to grow.",
+} as const
+
+export const story = [
+  "Vine & Bloom Floral began with a lifelong connection to the land, the seasons, and the beauty of Healdsburg.",
+  "Growing up on West Dry Creek Road, surrounded by the vineyards, gardens, and open spaces of Sonoma County, I learned from an early age to appreciate the simple magic of nature. My childhood was shaped by time spent outdoors, watching things grow, noticing the changing seasons, and understanding the connection between people and the land around them.",
+  "Those early experiences planted the seeds for everything Vine & Bloom represents today.",
+  "Flowers have always been a way to celebrate life’s most meaningful moments. They bring joy to celebrations, comfort during difficult times, and beauty into everyday life. Through floral design, I found a way to share the same sense of wonder and connection that I experienced growing up in Healdsburg.",
+  "My passion for nature also led me to create opportunities for children to experience the beauty of gardening firsthand. Through teaching garden programs, I help young minds discover where food comes from, how plants grow, and why protecting our natural world matters. Watching children experience the excitement of planting a seed or discovering something growing in the garden reminds me of the same curiosity and appreciation that shaped my own childhood.",
+  "Vine & Bloom Floral is the joining of those passions — flowers, gardening, creativity, and community.",
+  "Located in the heart of Healdsburg, our floral studio creates thoughtfully designed arrangements inspired by Sonoma County’s gardens, vineyards, and seasons. Every piece is created with intention, whether it is a celebration, a remembrance, a wedding, or simply a way to bring beauty into someone’s day.",
+  "This business is more than flowers. It is a return to my roots, a celebration of the place that raised me, and a way to share the beauty of nature with the community I love.",
 ] as const
 
 export const valleys = [

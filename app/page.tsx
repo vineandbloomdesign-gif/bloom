@@ -107,6 +107,14 @@ export default function Home() {
               from a garden that happens to sit beside a vineyard.
             </p>
           </div>
+          <p className="mt-6">
+            <Link
+              href="/about"
+              className="text-foreground underline decoration-border underline-offset-4 hover:decoration-primary"
+            >
+              The history of Vine&Bloom
+            </Link>
+          </p>
           <dl className="mt-8 grid gap-4 border-t border-border pt-6 sm:grid-cols-3">
             {[
               ["Visits", "By appointment"],

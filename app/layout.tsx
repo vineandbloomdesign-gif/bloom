@@ -3,7 +3,7 @@ import { Fraunces, Outfit } from "next/font/google"
 
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
-import { mapLinks, studio } from "@/lib/studio"
+import { founder, mapLinks, studio } from "@/lib/studio"
 
 import "./globals.css"
 
@@ -68,6 +68,12 @@ const jsonLd = {
   },
   areaServed: "Sonoma County",
   hasMap: mapLinks.open,
+  foundingDate: studio.founded,
+  founder: {
+    "@type": "Person",
+    name: founder.name,
+    jobTitle: "Founder",
+  },
 }
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
