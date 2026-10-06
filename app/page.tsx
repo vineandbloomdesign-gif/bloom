@@ -216,7 +216,7 @@ export default function Home() {
               Memorial services
             </p>
             <h2 className="mt-4 font-heading text-4xl leading-[1.05] tracking-tight md:text-5xl">
-              Flowers for the people we keep.
+              Flower that speak when words are hard to find.
             </h2>
             <div className="mt-6 space-y-4 text-base leading-relaxed text-muted-foreground md:text-lg">
               <p>
