@@ -45,9 +45,12 @@ export const mapLinks = {
   open: `https://www.google.com/maps/search/?api=1&query=${mapQuery}`,
 } as const
 
-/** Live page a phone opens when it scans the studio harvest QR. */
-export const harvestOrderUrl =
-  "https://vineandbloomdesign-gif.github.io/bloom/order"
+/** Clover shop. Purchases are paid here before pickup. */
+export const shopUrl =
+  "https://vine-bloom-floral-healdsburg.cloveronline.com/shop"
+
+/** A phone that scans the studio code opens the shop to pay. */
+export const harvestOrderUrl = shopUrl
 
 export const nav = [
   { href: "/about", label: "About" },

@@ -1,10 +1,9 @@
 import Image from "next/image"
-import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import { arrangements, formatMoney } from "@/lib/arrangements"
 import { publicPath } from "@/lib/public-path"
-import { studio } from "@/lib/studio"
+import { shopUrl, studio } from "@/lib/studio"
 
 const small = arrangements[0]
 const medium = arrangements[1]
@@ -26,22 +25,27 @@ export function HarvestOrderCta({ headingId }: { headingId: string }) {
           </h2>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
             Today&apos;s seasonal harvest is the order of the day at the{" "}
-            {studio.city} studio. Scan the code, or tap it, and place the
-            order online. Small is {formatMoney(small.price)}, medium is{" "}
-            {formatMoney(medium.price)}, and large is {formatMoney(large.price)}.
-            Pickup is Tuesday through Saturday, 10 to 5.
+            {studio.city} studio. Scan the code, or tap it, and pay on the
+            studio shop before pickup. Small is {formatMoney(small.price)},
+            medium is {formatMoney(medium.price)}, and large is{" "}
+            {formatMoney(large.price)}. Pickup is Tuesday through Saturday, 10
+            to 5.
           </p>
           <Button
             nativeButton={false}
-            render={<Link href="/order" />}
+            render={
+              <a href={shopUrl} target="_blank" rel="noreferrer" />
+            }
             className="mt-8 h-12 rounded-md px-6 text-base hover:bg-wine-deep"
           >
-            Order now
+            Pay before pickup
           </Button>
         </div>
         <div className="lg:col-span-5">
-          <Link
-            href="/order"
+          <a
+            href={shopUrl}
+            target="_blank"
+            rel="noreferrer"
             className="mx-auto block w-full max-w-xs bg-white p-4 ring-1 ring-border transition-colors hover:ring-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <Image
@@ -55,9 +59,9 @@ export function HarvestOrderCta({ headingId }: { headingId: string }) {
               Order now
             </span>
             <span className="mt-1 block text-center text-sm text-muted-foreground">
-              Tap or scan for today&apos;s harvest
+              Tap or scan to pay before pickup
             </span>
-          </Link>
+          </a>
         </div>
       </div>
     </section>

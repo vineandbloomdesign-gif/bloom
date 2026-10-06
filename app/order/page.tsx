@@ -24,9 +24,9 @@ export default function OrderPage() {
         </h1>
         <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
           A harvest arrangement in three sizes,{" "}
-          {formatMoney(small.price)} to {formatMoney(large.price)}. We build
-          it from what is growing, then set the time it will be ready for
-          pickup.
+          {formatMoney(small.price)} to {formatMoney(large.price)}. Pay on
+          the studio shop before pickup. We build it from what is growing,
+          then have it ready at the time you choose.
         </p>
       </section>
       <HarvestOrder />

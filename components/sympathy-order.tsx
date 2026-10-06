@@ -33,7 +33,7 @@ import {
   sympathySizes,
   validateServiceWhen,
 } from "@/lib/sympathy"
-import { studio } from "@/lib/studio"
+import { shopUrl, studio } from "@/lib/studio"
 
 type Field = "name" | "phone" | "when" | "place"
 type Errors = Partial<Record<Field | "form" | "size", string>>
@@ -258,7 +258,14 @@ export function SympathyOrder() {
             {note}
           </pre>
           <div className="no-print mt-6 flex flex-wrap gap-3">
-            <Button type="button" className="h-11 rounded-md px-5" onClick={copySlip}>
+            <Button
+              nativeButton={false}
+              render={<a href={shopUrl} target="_blank" rel="noreferrer" />}
+              className="h-11 rounded-md px-5 hover:bg-wine-deep"
+            >
+              Pay before pickup
+            </Button>
+            <Button type="button" variant="outline" className="h-11 rounded-md bg-card px-5" onClick={copySlip}>
               {copied ? "Copied" : "Copy slip"}
             </Button>
             <Button
@@ -569,15 +576,23 @@ export function SympathyOrder() {
           </div>
 
           <Button
-            type="submit"
+            nativeButton={false}
+            render={<a href={shopUrl} target="_blank" rel="noreferrer" />}
             className="mt-6 h-12 w-full rounded-md text-base hover:bg-wine-deep"
           >
-            Send the sympathy order
+            Pay before pickup
           </Button>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            This opens an email to {studio.email} with the piece, the price,
-            and where it should go. Nothing is stored on the website.
+            Pay on the studio shop before the flowers are picked up. Send the
+            service details below if the piece is going to a service or a home.
           </p>
+          <Button
+            type="submit"
+            variant="outline"
+            className="mt-3 h-12 w-full rounded-md bg-card text-base"
+          >
+            Send the service details
+          </Button>
         </form>
       </aside>
 

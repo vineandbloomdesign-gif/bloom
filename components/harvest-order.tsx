@@ -18,7 +18,6 @@ import {
   composeOrder,
   lineCount,
   orderCode,
-  orderMailto,
   orderTotal,
   type OrderLine,
   type OrderTicket,
@@ -30,7 +29,7 @@ import {
   validatePickup,
   type PickupIssue,
 } from "@/lib/pickup"
-import { studio } from "@/lib/studio"
+import { shopUrl, studio } from "@/lib/studio"
 
 type Field = "name" | "phone" | "ready"
 type Errors = Partial<Record<Field | "size", string>>
@@ -59,8 +58,8 @@ function digits(value: string) {
   return value.replace(/\D/g, "")
 }
 
-function openMailbox(href: string) {
-  window.location.assign(href)
+function openShop() {
+  window.open(shopUrl, "_blank", "noopener,noreferrer")
 }
 
 export function HarvestOrder() {
@@ -160,7 +159,7 @@ export function HarvestOrder() {
     setNote(body)
     setTicket(nextTicket)
     window.setTimeout(() => slipRef.current?.focus(), 0)
-    openMailbox(orderMailto(nextTicket, body))
+    openShop()
   }
 
   async function copySlip() {
@@ -185,11 +184,12 @@ export function HarvestOrder() {
             tabIndex={-1}
             className="mt-3 font-heading text-4xl tracking-tight outline-none"
           >
-            Ready {ticket.ready.replace(" Pacific", "")}.
+            Pay before pickup.
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            Order {ticket.code} is addressed to {studio.email}. Send the note
-            from your email app. If it did not open, copy the slip below.
+            Order {ticket.code} is ready {ticket.ready}. Pay for it on the
+            studio shop before you pick it up. If the shop did not open, use
+            Pay before pickup.
           </p>
           <dl className="mt-8 grid gap-6 border-y border-border py-6 sm:grid-cols-2">
             <div>
@@ -239,7 +239,14 @@ export function HarvestOrder() {
             {note}
           </pre>
           <div className="no-print mt-6 flex flex-wrap gap-3">
-            <Button type="button" className="h-11 rounded-md px-5" onClick={copySlip}>
+            <Button
+              nativeButton={false}
+              render={<a href={shopUrl} target="_blank" rel="noreferrer" />}
+              className="h-11 rounded-md px-5 hover:bg-wine-deep"
+            >
+              Pay before pickup
+            </Button>
+            <Button type="button" variant="outline" className="h-11 rounded-md bg-card px-5" onClick={copySlip}>
               {copied ? "Copied" : "Copy slip"}
             </Button>
             <Button
@@ -336,6 +343,9 @@ export function HarvestOrder() {
       <aside id="ticket" className="scroll-mt-28 lg:sticky lg:top-24 lg:col-span-5">
         <form
           className="border border-border bg-card p-5 sm:p-7"
+          action={shopUrl}
+          method="get"
+          target="_blank"
           onSubmit={onSubmit}
           noValidate
         >
@@ -508,12 +518,11 @@ export function HarvestOrder() {
             type="submit"
             className="mt-6 h-12 w-full rounded-md text-base hover:bg-wine-deep"
           >
-            Set pickup and send order
+            Pay before pickup
           </Button>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            This opens an email to {studio.email} with the size, the total,
-            and the time the arrangement will be ready. Nothing is stored on
-            the website.
+            This opens the studio shop so the harvest is paid before pickup.
+            Nothing is stored on the website.
           </p>
         </form>
       </aside>

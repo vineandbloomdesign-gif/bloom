@@ -14,7 +14,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { nav, studio } from "@/lib/studio"
+import { nav, shopUrl, studio } from "@/lib/studio"
 
 export function SiteHeader() {
   return (
@@ -45,7 +45,7 @@ export function SiteHeader() {
 
         <Button
           nativeButton={false}
-          render={<Link href="/order" />}
+          render={<a href={shopUrl} target="_blank" rel="noreferrer" />}
           className="hidden h-10 rounded-md px-4 lg:inline-flex"
         >
           Order harvest
@@ -96,7 +96,14 @@ export function SiteHeader() {
             <div className="mt-auto p-4">
               <SheetClose
                 nativeButton={false}
-                render={<Link href="/order" className="block" />}
+                render={
+                  <a
+                    href={shopUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block"
+                  />
+                }
               >
                 <Button className="h-12 w-full rounded-md text-base">
                   Order harvest
