@@ -21,7 +21,7 @@ export default function MemorialOrderPage() {
           Memorial · {studio.city}
         </p>
         <h1 className="mt-4 max-w-[12em] font-heading text-[clamp(3rem,6vw,5.2rem)] leading-[0.92] tracking-[-0.035em]">
-          Flower that speak when words are hard to find.
+          Flowers for those we cherish.
         </h1>
         <p className="mt-5 max-w-xl font-heading text-2xl leading-snug tracking-tight italic text-foreground">
           {studio.memorialLine}
