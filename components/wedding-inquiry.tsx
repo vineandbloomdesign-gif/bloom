@@ -1,121 +1,51 @@
 "use client"
 
 import { MinusIcon, PlusIcon } from "lucide-react"
-import { useId, useRef, useState, type FormEvent } from "react"
+import { useActionState, useEffect, useId, useRef, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { studio } from "@/lib/studio"
+import { requestWedding } from "@/lib/wedding-request"
 import {
-  composeWedding,
   defaultWeddingCounts,
-  formatWeddingDay,
-  newWeddingCode,
   pieceCount,
-  selectionFor,
-  validateWeddingDate,
-  weddingDateMessage,
-  weddingMailto,
   weddingPackages,
   type WeddingCountKey,
-  type WeddingRequest,
 } from "@/lib/wedding"
-
-type Field = "packages" | "date" | "venue" | "name" | "phone"
-type Errors = Partial<Record<Field, string>>
 
 function openMailbox(href: string) {
   window.location.assign(href)
 }
 
-function digits(value: string) {
-  return value.replace(/\D/g, "")
-}
-
 export function WeddingInquiry() {
   const formId = useId()
   const slipRef = useRef<HTMLHeadingElement>(null)
-  const [chosen, setChosen] = useState<Record<string, boolean>>({ basic: true })
+  const opened = useRef(false)
+  const [state, formAction, pending] = useActionState(requestWedding, null)
   const [counts, setCounts] = useState(defaultWeddingCounts)
-  const [weddingDate, setWeddingDate] = useState("")
-  const [errors, setErrors] = useState<Errors>({})
-  const [request, setRequest] = useState<WeddingRequest | null>(null)
-  const [note, setNote] = useState("")
   const [copied, setCopied] = useState(false)
 
-  function togglePackage(id: string) {
-    setChosen((current) => ({ ...current, [id]: !current[id] }))
-    setErrors((current) => ({ ...current, packages: undefined }))
-  }
+  useEffect(() => {
+    if (!state?.ok || !state.mailto || opened.current) return
+    opened.current = true
+    openMailbox(state.mailto)
+  }, [state])
+
+  useEffect(() => {
+    if (state?.ok) slipRef.current?.focus()
+  }, [state])
 
   function changeCount(key: WeddingCountKey, next: number) {
     setCounts((current) => ({ ...current, [key]: next }))
   }
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    const element = event.currentTarget
-    const data = new FormData(element)
-    if (String(data.get("company") || "").trim()) {
-      setRequest({
-        code: "VB-NOTE",
-        name: "Studio",
-        phone: studio.phone,
-        day: "Not set",
-        venue: "",
-        note: "",
-        packages: [],
-      })
-      return
-    }
-
-    const name = String(data.get("name") || "").trim()
-    const phone = String(data.get("phone") || "").trim()
-    const venue = String(data.get("venue") || "").trim()
-    const message = String(data.get("note") || "").trim()
-    const selected = weddingPackages.filter((pkg) => chosen[pkg.id])
-    const nextErrors: Errors = {}
-    if (selected.length === 0) {
-      nextErrors.packages = "Choose the basic package, or add tables, the bar, or a backdrop."
-    }
-    const dateIssue = validateWeddingDate(weddingDate, new Date())
-    if (dateIssue) nextErrors.date = weddingDateMessage(dateIssue)
-    if (venue.length < 2) nextErrors.venue = "Tell us the venue."
-    if (name.length < 2) nextErrors.name = "Add a name."
-    if (digits(phone).length < 10) nextErrors.phone = "Add a phone number we can call."
-    setErrors(nextErrors)
-
-    const first = (Object.keys(nextErrors) as Field[])[0]
-    if (first) {
-      const fieldName = first === "packages" ? "" : first === "date" ? "wedding-date" : first
-      const target = fieldName
-        ? element.querySelector<HTMLElement>(`[name="${fieldName}"]`)
-        : document.getElementById(`${formId}-packages`)
-      target?.focus()
-      return
-    }
-
-    const nextRequest: WeddingRequest = {
-      code: newWeddingCode(),
-      name,
-      phone,
-      day: formatWeddingDay(weddingDate),
-      venue,
-      note: message,
-      packages: selected.map((pkg) => selectionFor(pkg, counts)),
-    }
-    const body = composeWedding(nextRequest)
-    setNote(body)
-    setRequest(nextRequest)
-    window.setTimeout(() => slipRef.current?.focus(), 0)
-    openMailbox(weddingMailto(nextRequest, body))
-  }
-
   async function copySlip() {
+    if (!state?.ok) return
     try {
-      await navigator.clipboard.writeText(`To: ${studio.email}\n\n${note}`)
+      await navigator.clipboard.writeText(`To: ${studio.email}\n\n${state.body}`)
       setCopied(true)
       window.setTimeout(() => setCopied(false), 2000)
     } catch {
@@ -123,7 +53,8 @@ export function WeddingInquiry() {
     }
   }
 
-  if (request) {
+  if (state?.ok) {
+    const request = state.request
     return (
       <section className="mx-auto w-full max-w-3xl px-5 pb-24 md:px-8">
         <div className="border border-border bg-card p-6 sm:p-10">
@@ -175,26 +106,43 @@ export function WeddingInquiry() {
               </li>
             ))}
           </ul>
-          <pre className="mt-8 overflow-x-auto border border-border bg-background p-4 text-sm leading-relaxed whitespace-pre-wrap">
-            {note}
-          </pre>
-          <Button
-            type="button"
-            variant="outline"
-            className="mt-6 h-11 rounded-md bg-card px-5"
-            onClick={copySlip}
-          >
-            {copied ? "Copied" : "Copy the slip"}
-          </Button>
+          {state.body ? (
+            <pre className="mt-8 overflow-x-auto border border-border bg-background p-4 text-sm leading-relaxed whitespace-pre-wrap">
+              {state.body}
+            </pre>
+          ) : null}
+          <div className="mt-6 flex flex-wrap gap-3">
+            {state.mailto ? (
+              <Button
+                nativeButton={false}
+                render={<a href={state.mailto} />}
+                className="h-11 rounded-md px-5"
+              >
+                Open the email
+              </Button>
+            ) : null}
+            {state.body ? (
+              <Button
+                type="button"
+                variant="outline"
+                className="h-11 rounded-md bg-card px-5"
+                onClick={copySlip}
+              >
+                {copied ? "Copied" : "Copy the slip"}
+              </Button>
+            ) : null}
+          </div>
         </div>
       </section>
     )
   }
 
+  const errors = state?.ok === false ? state.errors : {}
+
   return (
     <form
       className="mx-auto grid w-full max-w-6xl gap-12 px-5 pb-24 md:px-8 lg:grid-cols-12 lg:gap-16"
-      onSubmit={onSubmit}
+      action={formAction}
       noValidate
     >
       <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
@@ -224,95 +172,98 @@ export function WeddingInquiry() {
         )}
         <fieldset className="mt-4 grid gap-3">
           <legend className="sr-only">Wedding packages</legend>
-          {weddingPackages.map((pkg) => {
-            const selected = Boolean(chosen[pkg.id])
-            return (
-              <div
-                key={pkg.id}
-                className={`border p-4 sm:p-5 ${
-                  selected
-                    ? "border-primary bg-card"
-                    : "border-border bg-background/40"
-                }`}
-              >
-                <label className="flex cursor-pointer items-start gap-3">
-                  <input
-                    className="mt-1.5 size-4 accent-primary"
-                    type="checkbox"
-                    name="package"
-                    value={pkg.id}
-                    checked={selected}
-                    onChange={() => togglePackage(pkg.id)}
-                  />
-                  <span>
-                    <span className="block font-heading text-2xl tracking-tight">
-                      {pkg.name}
-                    </span>
-                    <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">
-                      {pkg.copy}
-                    </span>
+          {weddingPackages.map((pkg) => (
+            <div
+              key={pkg.id}
+              className="group border border-border bg-background/40 p-4 sm:p-5 has-[:checked]:border-primary has-[:checked]:bg-card"
+            >
+              <label className="flex cursor-pointer items-start gap-3">
+                <input
+                  className="mt-1.5 size-4 accent-primary"
+                  type="checkbox"
+                  name="package"
+                  value={pkg.id}
+                  defaultChecked={pkg.id === "basic"}
+                />
+                <span>
+                  <span className="block font-heading text-2xl tracking-tight">
+                    {pkg.name}
                   </span>
-                </label>
-                <ul className="mt-4 space-y-3 border-t border-border pt-4">
-                  {pkg.pieces.map((piece) => {
-                    const count = pieceCount(piece, counts)
-                    const titled = piece.name !== pkg.name
-                    return (
-                      <li
-                        key={piece.id}
-                        className="flex items-center justify-between gap-4"
-                      >
-                        <span>
-                          {titled ? <span className="block text-sm">{piece.name}</span> : null}
-                          <span className="mt-0.5 block text-sm text-muted-foreground">
-                            {piece.copy}
-                          </span>
+                  <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">
+                    {pkg.copy}
+                  </span>
+                </span>
+              </label>
+              <ul className="mt-4 hidden space-y-3 border-t border-border pt-4 group-has-[:checked]:block">
+                {pkg.pieces.map((piece) => {
+                  const count = piece.countKey ? pieceCount(piece, counts) : piece.fixed ?? 0
+                  const titled = piece.name !== pkg.name
+                  return (
+                    <li
+                      key={piece.id}
+                      className="flex items-center justify-between gap-4"
+                    >
+                      <span>
+                        {titled ? <span className="block text-sm">{piece.name}</span> : null}
+                        <span className="mt-0.5 block text-sm text-muted-foreground">
+                          {piece.copy}
                         </span>
-                        {selected && piece.countKey ? (
-                          <span className="flex shrink-0 items-center gap-1.5">
-                            <Button
-                              type="button"
-                              variant="outline"
-                              size="icon"
-                              className="size-10 rounded-md bg-card"
-                              aria-label={`Fewer ${piece.name}`}
-                              disabled={count <= piece.min}
-                              onClick={() =>
-                                changeCount(piece.countKey as WeddingCountKey, count - 1)
-                              }
-                            >
-                              <MinusIcon />
-                            </Button>
-                            <span className="w-8 text-center font-heading text-xl tabular-nums">
-                              {count}
-                            </span>
-                            <Button
-                              type="button"
-                              variant="outline"
-                              size="icon"
-                              className="size-10 rounded-md bg-card"
-                              aria-label={`More ${piece.name}`}
-                              disabled={count >= piece.max}
-                              onClick={() =>
-                                changeCount(piece.countKey as WeddingCountKey, count + 1)
-                              }
-                            >
-                              <PlusIcon />
-                            </Button>
-                          </span>
-                        ) : null}
-                        {selected && piece.fixed != null ? (
-                          <span className="shrink-0 font-heading text-xl text-primary tabular-nums">
-                            {piece.fixed}
-                          </span>
-                        ) : null}
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-            )
-          })}
+                      </span>
+                      {piece.countKey ? (
+                        <span className="flex shrink-0 items-center gap-1.5">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="icon"
+                            className="size-10 rounded-md bg-card"
+                            aria-label={`Fewer ${piece.name}`}
+                            disabled={count <= piece.min}
+                            onClick={() =>
+                              changeCount(piece.countKey as WeddingCountKey, count - 1)
+                            }
+                          >
+                            <MinusIcon />
+                          </Button>
+                          <input
+                            className="w-10 bg-transparent text-center font-heading text-xl tabular-nums outline-none"
+                            type="number"
+                            name={piece.countKey}
+                            min={piece.min}
+                            max={piece.max}
+                            aria-label={`How many ${piece.name}`}
+                            value={count}
+                            onChange={(event) =>
+                              changeCount(
+                                piece.countKey as WeddingCountKey,
+                                Number(event.target.value)
+                              )
+                            }
+                          />
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="icon"
+                            className="size-10 rounded-md bg-card"
+                            aria-label={`More ${piece.name}`}
+                            disabled={count >= piece.max}
+                            onClick={() =>
+                              changeCount(piece.countKey as WeddingCountKey, count + 1)
+                            }
+                          >
+                            <PlusIcon />
+                          </Button>
+                        </span>
+                      ) : (
+                        <span className="shrink-0 font-heading text-xl text-primary tabular-nums">
+                          {piece.fixed}
+                        </span>
+                      )}
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          ))}
         </fieldset>
       </div>
 
@@ -321,12 +272,10 @@ export function WeddingInquiry() {
           <p className="text-[0.72rem] font-medium uppercase tracking-[0.22em] text-primary">
             The request
           </p>
-          <h2 className="mt-3 font-heading text-3xl tracking-tight">
-            Tell us the day.
-          </h2>
+          <h2 className="mt-3 font-heading text-3xl tracking-tight">Tell us the day.</h2>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            We confirm the flowers and the cost by email. Nothing is charged
-            on this page.
+            We confirm the flowers and the cost by email. Nothing is charged on
+            this page.
           </p>
 
           <div className="mt-6">
@@ -336,14 +285,9 @@ export function WeddingInquiry() {
               name="wedding-date"
               type="date"
               required
-              value={weddingDate}
               aria-invalid={Boolean(errors.date)}
               aria-describedby={errors.date ? `${formId}-date-error` : undefined}
               className="mt-2 h-11 bg-white"
-              onChange={(event) => {
-                setWeddingDate(event.target.value)
-                setErrors((current) => ({ ...current, date: undefined }))
-              }}
             />
             {errors.date ? (
               <p id={`${formId}-date-error`} className="mt-2 text-sm text-destructive" role="alert">
@@ -362,7 +306,6 @@ export function WeddingInquiry() {
               aria-invalid={Boolean(errors.venue)}
               aria-describedby={errors.venue ? `${formId}-venue-error` : undefined}
               className="mt-2 h-11 bg-white"
-              onChange={() => setErrors((current) => ({ ...current, venue: undefined }))}
             />
             {errors.venue ? (
               <p id={`${formId}-venue-error`} className="mt-2 text-sm text-destructive" role="alert">
@@ -381,7 +324,6 @@ export function WeddingInquiry() {
               aria-invalid={Boolean(errors.name)}
               aria-describedby={errors.name ? `${formId}-name-error` : undefined}
               className="mt-2 h-11 bg-white"
-              onChange={() => setErrors((current) => ({ ...current, name: undefined }))}
             />
             {errors.name ? (
               <p id={`${formId}-name-error`} className="mt-2 text-sm text-destructive" role="alert">
@@ -402,7 +344,6 @@ export function WeddingInquiry() {
               aria-invalid={Boolean(errors.phone)}
               aria-describedby={errors.phone ? `${formId}-phone-error` : undefined}
               className="mt-2 h-11 bg-white"
-              onChange={() => setErrors((current) => ({ ...current, phone: undefined }))}
             />
             {errors.phone ? (
               <p id={`${formId}-phone-error`} className="mt-2 text-sm text-destructive" role="alert">
@@ -421,8 +362,12 @@ export function WeddingInquiry() {
             />
           </div>
 
-          <Button type="submit" className="mt-6 h-12 w-full rounded-md text-base hover:bg-wine-deep">
-            Request these packages
+          <Button
+            type="submit"
+            className="mt-6 h-12 w-full rounded-md text-base hover:bg-wine-deep"
+            disabled={pending}
+          >
+            {pending ? "Sending the request…" : "Request these packages"}
           </Button>
         </div>
       </aside>

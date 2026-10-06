@@ -134,6 +134,13 @@ export type WeddingRequest = {
   packages: WeddingSelection[]
 }
 
+export type WeddingField = "packages" | "date" | "venue" | "name" | "phone"
+export type WeddingFormErrors = Partial<Record<WeddingField, string>>
+
+export type WeddingFormState =
+  | { ok: false; errors: WeddingFormErrors }
+  | { ok: true; request: WeddingRequest; body: string; mailto: string }
+
 export function pieceCount(
   piece: WeddingPiece,
   counts: Record<WeddingCountKey, number>
