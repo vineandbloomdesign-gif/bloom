@@ -16,7 +16,7 @@
  * - white: photo-1766910700520-698f0bf334b2
  * - golden: photo-1763786470689-5ff88c985885
  * - table: photo-1519225421980-715cb0215aed
- * - memorial.jpg: graveside flowers for memorial services
+ * - memorial-wreath.jpg: sympathy wreath for memorial services
  */
 
 export const studio = {
