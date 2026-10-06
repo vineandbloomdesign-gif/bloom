@@ -45,6 +45,10 @@ export const mapLinks = {
   open: `https://www.google.com/maps/search/?api=1&query=${mapQuery}`,
 } as const
 
+/** Live page a phone opens when it scans the studio harvest QR. */
+export const harvestOrderUrl =
+  "https://vineandbloomdesign-gif.github.io/bloom/order"
+
 export const nav = [
   { href: "/about", label: "About" },
   { href: "/#services", label: "Services" },

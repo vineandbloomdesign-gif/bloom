@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 
+import { HarvestOrderCta } from "@/components/harvest-order-cta"
 import { InquiryForm } from "@/components/inquiry-form"
 import { mapLinks, studio } from "@/lib/studio"
 
@@ -95,6 +96,10 @@ export default function VisitPage() {
           </p>
         </div>
       </section>
+
+      <div className="border-y border-border">
+        <HarvestOrderCta headingId="visit-order-now" />
+      </div>
 
       <section id="write" className="bg-wine-deep text-[#faf6f1]">
         <div className="mx-auto grid w-full max-w-6xl gap-12 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-12">

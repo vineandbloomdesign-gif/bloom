@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
+import { HarvestOrderCta } from "@/components/harvest-order-cta"
 import { InquiryForm } from "@/components/inquiry-form"
 import { Button } from "@/components/ui/button"
 import { SeasonGrid } from "@/components/season-grid"
@@ -74,6 +75,8 @@ export default function Home() {
           ))}
         </p>
       </div>
+
+      <HarvestOrderCta headingId="home-order-now" />
 
       <section id="studio" className="mx-auto grid w-full max-w-6xl gap-10 px-5 py-20 md:px-8 md:py-28 lg:grid-cols-12 lg:items-center lg:gap-16">
         <div className="lg:col-span-5">
