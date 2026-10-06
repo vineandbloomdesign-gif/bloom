@@ -27,6 +27,8 @@ import { formatPickup } from "@/lib/pickup"
 import {
   serviceIssueMessage,
   sympathyCopy,
+  casketDeluxePrice,
+  piecePrice,
   sympathyForms,
   sympathySizes,
   validateServiceWhen,
@@ -82,7 +84,13 @@ export function SympathyOrder() {
   const form = sympathyForms.find((item) => item.id === formIdChoice)
   const size = sympathySizes.find((item) => item.id === sizeId)
   const lines: OrderLine[] = form && size
-    ? [{ name: `${form.name}, ${size.name.toLowerCase()}`, quantity, price: size.price }]
+    ? [
+        {
+          name: `${form.name}, ${size.name.toLowerCase()}`,
+          quantity,
+          price: piecePrice(form.id, size.id),
+        },
+      ]
     : []
   const total = orderTotal(lines)
   const whenIssue =
@@ -350,15 +358,16 @@ export function SympathyOrder() {
             </p>
           ) : (
             <p className="mt-3 text-sm text-muted-foreground">
-              From {formatMoney(sympathySizes[0].price)} to{" "}
-              {formatMoney(sympathySizes[sympathySizes.length - 1].price)} full
-              deluxe.
+              Wreaths run from {formatMoney(sympathySizes[0].price)} to{" "}
+              {formatMoney(sympathySizes[sympathySizes.length - 1].price)}. A
+              full deluxe casket spray is {formatMoney(casketDeluxePrice)}.
             </p>
           )}
           <fieldset className="mt-4 grid gap-3">
             <legend className="sr-only">Size and price</legend>
             {sympathySizes.map((item) => {
               const selected = item.id === sizeId
+              const price = piecePrice(formIdChoice, item.id)
               return (
                 <label
                   key={item.id}
@@ -381,7 +390,7 @@ export function SympathyOrder() {
                       {item.name}
                     </span>
                     <span className="font-heading text-2xl tracking-tight text-primary">
-                      {formatMoney(item.price)}
+                      {formatMoney(price)}
                     </span>
                   </span>
                   <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">
@@ -450,7 +459,8 @@ export function SympathyOrder() {
             </div>
           ) : (
             <p className="mt-5 text-sm text-muted-foreground">
-              Small is {formatMoney(25000)}. Full deluxe is {formatMoney(100000)}.
+              Small is {formatMoney(25000)}. A full deluxe casket spray is{" "}
+              {formatMoney(casketDeluxePrice)}.
             </p>
           )}
 

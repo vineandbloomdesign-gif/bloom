@@ -15,7 +15,7 @@ export type SympathySize = {
   copy: string
 }
 
-/** Hearts, crosses, circles, and casket sprays share one price scale. */
+/** Wreaths share one price scale. A full deluxe casket spray is priced apart. */
 export const sympathyForms: SympathyForm[] = [
   {
     id: "heart",
@@ -35,11 +35,11 @@ export const sympathyForms: SympathyForm[] = [
   {
     id: "casket",
     name: "Casket spray",
-    copy: "Flowers laid across the casket.",
+    copy: "Flowers laid across the casket. Full deluxe is $1,500.",
   },
 ]
 
-/** Small is $250. Full deluxe is $1,000. */
+/** Small is $250. A wreath full deluxe is $1,000. A casket spray full deluxe is $1,500. */
 export const sympathySizes: SympathySize[] = [
   {
     id: "small",
@@ -73,6 +73,15 @@ export const sympathyCopy = {
   count: "Pieces",
   subject: "sympathy",
 } as const
+
+export const casketDeluxePrice = 150000
+
+export function piecePrice(formId: string, sizeId: string) {
+  const size = sympathySizes.find((item) => item.id === sizeId)
+  if (!size) return 0
+  if (formId === "casket" && sizeId === "deluxe") return casketDeluxePrice
+  return size.price
+}
 
 export function sympathyRange() {
   const small = sympathySizes[0]
