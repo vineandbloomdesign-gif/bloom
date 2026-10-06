@@ -23,7 +23,7 @@ The inquiry form does not send mail from a server. It opens the visitor’s emai
 
 The visit page is `/visit`. It shows a Google map of 20 Healdsburg Ave, Healdsburg, CA 95448, the studio phone, and the studio email. The street address lives on `studio` in `lib/studio.ts`.
 
-Walk-in orders live at `/order`. Stem prices are in [`lib/stems.ts`](lib/stems.ts). The page totals each stem, and the ready time is limited to Tuesday–Saturday, 10:00 AM–5:00 PM Pacific. Placing an order opens an email to the studio with the slip. Nothing is stored on the website.
+Seasonal harvest arrangements live at `/order`. Three sizes are priced in [`lib/arrangements.ts`](lib/arrangements.ts): small $75, medium $125, and large $200. The ready time is limited to Tuesday–Saturday, 10:00 AM–5:00 PM Pacific. Placing an order opens an email to the studio with the slip. Nothing is stored on the website.
 
 ## Replace the photographs
 

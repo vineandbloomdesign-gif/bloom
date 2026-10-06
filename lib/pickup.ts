@@ -115,7 +115,7 @@ export function pickupIssueMessage(issue: PickupIssue) {
     case "missing":
       return "Set the day and time the flowers will be ready."
     case "closed-day":
-      return "Walk-in orders are ready Tuesday through Saturday."
+      return "Harvest arrangements are ready Tuesday through Saturday."
     case "hours":
       return "Choose a time between 10:00 AM and 5:00 PM."
     case "past":

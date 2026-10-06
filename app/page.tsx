@@ -165,7 +165,7 @@ export default function Home() {
               href="/order"
               className="text-foreground underline decoration-border underline-offset-4 hover:decoration-primary"
             >
-              order by the stem
+              order a harvest arrangement
             </Link>{" "}
             and set the time it will be ready for pickup.
           </p>

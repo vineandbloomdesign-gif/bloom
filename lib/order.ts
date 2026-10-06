@@ -1,5 +1,5 @@
+import { formatMoney } from "@/lib/arrangements"
 import { formatPickup } from "@/lib/pickup"
-import { formatMoney } from "@/lib/stems"
 import { studio } from "@/lib/studio"
 
 export type OrderLine = {
@@ -26,7 +26,7 @@ export function orderCode() {
   return `VB-${chars.join("")}`
 }
 
-export function stemCount(lines: OrderLine[]) {
+export function lineCount(lines: OrderLine[]) {
   return lines.reduce((sum, line) => sum + line.quantity, 0)
 }
 
@@ -42,14 +42,14 @@ export function composeOrder(ticket: OrderTicket) {
   })
   const note = ticket.note.trim()
   return [
-    `Walk-in order ${ticket.code}`,
+    `Seasonal harvest ${ticket.code}`,
     `Name: ${ticket.name}`,
     `Phone: ${ticket.phone}`,
     `Ready for pickup: ${ticket.ready}`,
     "",
     ...lines,
     "",
-    `Stems: ${stemCount(ticket.lines)}`,
+    `Arrangements: ${lineCount(ticket.lines)}`,
     `Total: ${formatMoney(orderTotal(ticket.lines))}`,
     note ? `\nNote: ${note}` : "",
   ]
@@ -59,7 +59,7 @@ export function composeOrder(ticket: OrderTicket) {
 }
 
 export function orderMailto(ticket: OrderTicket, body: string) {
-  const subject = `Vine&Bloom walk-in ${ticket.code} · ready ${ticket.ready}`
+  const subject = `Vine&Bloom harvest ${ticket.code} · ready ${ticket.ready}`
   return `mailto:${studio.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 

@@ -121,7 +121,7 @@ export default function VisitPage() {
                 href="/order"
                 className="text-lg underline decoration-white/30 underline-offset-4 hover:decoration-white"
               >
-                Order stems for pickup
+                Order a harvest arrangement
               </Link>
             </p>
           </div>

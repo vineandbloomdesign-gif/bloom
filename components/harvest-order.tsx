@@ -13,12 +13,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { arrangements, formatMoney } from "@/lib/arrangements"
 import {
   composeOrder,
+  lineCount,
   orderCode,
   orderMailto,
   orderTotal,
-  stemCount,
   type OrderLine,
   type OrderTicket,
 } from "@/lib/order"
@@ -29,11 +30,10 @@ import {
   validatePickup,
   type PickupIssue,
 } from "@/lib/pickup"
-import { formatMoney, stemGroups, stems } from "@/lib/stems"
 import { studio } from "@/lib/studio"
 
 type Field = "name" | "phone" | "ready"
-type Errors = Partial<Record<Field | "stems", string>>
+type Errors = Partial<Record<Field | "size", string>>
 
 let cachedNow = 0
 
@@ -63,13 +63,14 @@ function openMailbox(href: string) {
   window.location.assign(href)
 }
 
-export function WalkInOrder() {
+export function HarvestOrder() {
   const formId = useId()
   const slipRef = useRef<HTMLHeadingElement>(null)
   const now = useSyncExternalStore(subscribeToClock, nowSnapshot, nowOnServer)
   const suggestions = now === 0 ? [] : suggestPickups(new Date(now))
 
-  const [quantities, setQuantities] = useState<Record<string, number>>({})
+  const [sizeId, setSizeId] = useState("")
+  const [quantity, setQuantity] = useState(1)
   const [readyDate, setReadyDate] = useState("")
   const [readyTime, setReadyTime] = useState("")
   const [errors, setErrors] = useState<Errors>({})
@@ -77,11 +78,10 @@ export function WalkInOrder() {
   const [note, setNote] = useState("")
   const [copied, setCopied] = useState(false)
 
-  const lines: OrderLine[] = stems.flatMap((stem) => {
-    const quantity = quantities[stem.id] ?? 0
-    return quantity > 0 ? [{ name: stem.name, quantity, price: stem.price }] : []
-  })
-  const count = stemCount(lines)
+  const size = arrangements.find((item) => item.id === sizeId)
+  const lines: OrderLine[] = size
+    ? [{ name: `${size.name} harvest arrangement`, quantity, price: size.price }]
+    : []
   const total = orderTotal(lines)
   const readyIssue =
     now === 0 || !readyDate || !readyTime
@@ -92,12 +92,9 @@ export function WalkInOrder() {
       ? formatPickup(readyDate, readyTime)
       : ""
 
-  function setQuantity(id: string, next: number) {
-    setQuantities((current) => ({
-      ...current,
-      [id]: Math.min(99, Math.max(0, next)),
-    }))
-    setErrors((current) => ({ ...current, stems: undefined }))
+  function chooseSize(id: string) {
+    setSizeId(id)
+    setErrors((current) => ({ ...current, size: undefined }))
   }
 
   function chooseReady(date: string, time: string) {
@@ -126,7 +123,7 @@ export function WalkInOrder() {
     const phone = String(data.get("phone") || "").trim()
     const message = String(data.get("note") || "").trim()
     const nextErrors: Errors = {}
-    if (lines.length === 0) nextErrors.stems = "Add at least one stem."
+    if (!size) nextErrors.size = "Choose a size."
     if (name.length < 2) nextErrors.name = "Add the name for the pickup."
     if (digits(phone).length < 10) {
       nextErrors.phone = "Add a phone number we can call when it is ready."
@@ -142,9 +139,11 @@ export function WalkInOrder() {
     const first = (Object.keys(nextErrors) as (keyof Errors)[])[0]
     if (first) {
       const target =
-        first === "stems"
-          ? document.getElementById(`${formId}-stems`)
-          : form.querySelector<HTMLElement>(`[name="${first === "ready" ? "ready-date" : first}"]`)
+        first === "size"
+          ? document.getElementById(`${formId}-size`)
+          : form.querySelector<HTMLElement>(
+              `[name="${first === "ready" ? "ready-date" : first}"]`
+            )
       target?.focus()
       return
     }
@@ -179,7 +178,7 @@ export function WalkInOrder() {
       <section className="mx-auto w-full max-w-3xl px-5 pb-20 md:px-8">
         <div className="border border-border bg-card p-6 sm:p-10">
           <p className="text-[0.72rem] font-medium uppercase tracking-[0.22em] text-primary">
-            Walk-in pickup
+            Seasonal harvest
           </p>
           <h2
             ref={slipRef}
@@ -190,8 +189,7 @@ export function WalkInOrder() {
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
             Order {ticket.code} is addressed to {studio.email}. Send the note
-            from your email app. If it did not open, copy it and the studio
-            still has the slip below.
+            from your email app. If it did not open, copy the slip below.
           </p>
           <dl className="mt-8 grid gap-6 border-y border-border py-6 sm:grid-cols-2">
             <div>
@@ -225,7 +223,8 @@ export function WalkInOrder() {
           </ul>
           <div className="mt-6 flex items-baseline justify-between border-t border-border pt-4">
             <span className="text-sm text-muted-foreground">
-              {stemCount(ticket.lines)} stems
+              {lineCount(ticket.lines)} arrangement
+              {lineCount(ticket.lines) === 1 ? "" : "s"}
             </span>
             <span className="font-heading text-3xl tracking-tight">
               {formatMoney(orderTotal(ticket.lines))}
@@ -257,7 +256,8 @@ export function WalkInOrder() {
               className="h-11 rounded-md bg-card px-5"
               onClick={() => {
                 setTicket(null)
-                setQuantities({})
+                setSizeId("")
+                setQuantity(1)
                 setReadyDate("")
                 setReadyTime("")
                 setNote("")
@@ -275,87 +275,62 @@ export function WalkInOrder() {
     <div className="mx-auto grid w-full max-w-6xl gap-10 px-5 pb-28 md:px-8 lg:grid-cols-12 lg:items-start lg:pb-20">
       <div className="lg:col-span-7">
         <p
-          id={`${formId}-stems`}
+          id={`${formId}-size`}
           tabIndex={-1}
           className="text-[0.72rem] font-medium uppercase tracking-[0.22em] text-primary outline-none"
         >
-          The stems
+          Three sizes
         </p>
-        {errors.stems ? (
+        {errors.size ? (
           <p className="mt-3 text-sm text-destructive" role="alert">
-            {errors.stems}
+            {errors.size}
           </p>
         ) : (
           <p className="mt-3 text-sm text-muted-foreground">
-            Each price is for one stem. Add as many as the bouquet needs.
+            From {formatMoney(arrangements[0].price)} to{" "}
+            {formatMoney(arrangements[arrangements.length - 1].price)}. The
+            stems change with the week. You choose the size.
           </p>
         )}
-        {stemGroups.map((group) => (
-          <section key={group} className="mt-8">
-            <h2 className="font-heading text-2xl tracking-tight">{group}</h2>
-            <ul className="mt-2 border-t border-border">
-              {stems
-                .filter((stem) => stem.group === group)
-                .map((stem) => {
-                  const quantity = quantities[stem.id] ?? 0
-                  return (
-                    <li
-                      key={stem.id}
-                      className="flex items-center gap-3 border-b border-border py-4 sm:gap-4"
-                    >
-                      <div className="min-w-0 flex-1">
-                        <p className="font-heading text-2xl tracking-tight">
-                          {stem.name}
-                        </p>
-                        <p className="mt-1 text-sm text-muted-foreground">
-                          {formatMoney(stem.price)} a stem
-                          {quantity > 0 ? (
-                            <span className="sm:hidden">
-                              {" "}
-                              · {formatMoney(stem.price * quantity)}
-                            </span>
-                          ) : null}
-                        </p>
-                      </div>
-                      <p className="hidden w-20 text-right text-sm tabular-nums sm:block">
-                        {quantity > 0 ? formatMoney(stem.price * quantity) : ""}
-                      </p>
-                      <div className="flex items-center gap-1.5">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="icon"
-                          className="size-10 rounded-md bg-card"
-                          aria-label={`Remove one ${stem.name}`}
-                          disabled={quantity === 0}
-                          onClick={() => setQuantity(stem.id, quantity - 1)}
-                        >
-                          <MinusIcon />
-                        </Button>
-                        <span
-                          className="w-8 text-center font-heading text-xl tabular-nums"
-                          aria-label={`${stem.name} quantity`}
-                        >
-                          {quantity}
-                        </span>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="icon"
-                          className="size-10 rounded-md bg-card"
-                          aria-label={`Add one ${stem.name}`}
-                          disabled={quantity >= 99}
-                          onClick={() => setQuantity(stem.id, quantity + 1)}
-                        >
-                          <PlusIcon />
-                        </Button>
-                      </div>
-                    </li>
-                  )
-                })}
-            </ul>
-          </section>
-        ))}
+        <fieldset className="mt-6 grid gap-4">
+          <legend className="sr-only">Harvest arrangement size</legend>
+          {arrangements.map((item) => {
+            const selected = item.id === sizeId
+            return (
+              <label
+                key={item.id}
+                className={`cursor-pointer border p-5 transition-colors ${
+                  selected
+                    ? "border-primary bg-card"
+                    : "border-border bg-background/40 hover:border-primary/40"
+                }`}
+              >
+                <input
+                  className="sr-only"
+                  type="radio"
+                  name="size"
+                  value={item.id}
+                  checked={selected}
+                  onChange={() => chooseSize(item.id)}
+                />
+                <span className="flex items-baseline justify-between gap-4">
+                  <span className="font-heading text-3xl tracking-tight">
+                    {item.name}
+                  </span>
+                  <span className="font-heading text-3xl tracking-tight text-primary">
+                    {formatMoney(item.price)}
+                  </span>
+                </span>
+                <span className="mt-2 block text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">
+                  {item.scale}
+                </span>
+                <span className="mt-2 block text-base leading-relaxed text-muted-foreground">
+                  {item.copy}
+                </span>
+              </label>
+            )
+          })}
+        </fieldset>
       </div>
 
       <aside id="ticket" className="scroll-mt-28 lg:sticky lg:top-24 lg:col-span-5">
@@ -372,36 +347,51 @@ export function WalkInOrder() {
           </div>
 
           <p className="text-[0.72rem] font-medium uppercase tracking-[0.22em] text-primary">
-            Walk-in ticket
+            Your arrangement
           </p>
           <h2 className="mt-3 font-heading text-3xl tracking-tight">
-            {count === 0 ? "No stems yet" : `${count} stem${count === 1 ? "" : "s"}`}
+            {size ? `${size.name} harvest` : "Choose a size"}
           </h2>
-          <p
-            className="mt-1 font-heading text-4xl tracking-tight text-primary"
-            aria-live="polite"
-          >
+          <p className="mt-1 font-heading text-4xl tracking-tight text-primary" aria-live="polite">
             {formatMoney(total)}
           </p>
 
-          <ul className="mt-5 space-y-2 text-sm">
-            {lines.length === 0 ? (
-              <li className="text-muted-foreground">
-                The total updates as you add stems.
-              </li>
-            ) : (
-              lines.map((line) => (
-                <li key={line.name} className="flex justify-between gap-4">
-                  <span>
-                    {line.name} × {line.quantity}
-                  </span>
-                  <span className="tabular-nums">
-                    {formatMoney(line.price * line.quantity)}
-                  </span>
-                </li>
-              ))
-            )}
-          </ul>
+          {size ? (
+            <div className="mt-5 flex items-center justify-between gap-4 border-t border-border pt-5">
+              <p className="text-sm text-muted-foreground">How many</p>
+              <div className="flex items-center gap-1.5">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  className="size-10 rounded-md bg-card"
+                  aria-label="Remove one arrangement"
+                  disabled={quantity <= 1}
+                  onClick={() => setQuantity((current) => Math.max(1, current - 1))}
+                >
+                  <MinusIcon />
+                </Button>
+                <span className="w-8 text-center font-heading text-xl tabular-nums">
+                  {quantity}
+                </span>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  className="size-10 rounded-md bg-card"
+                  aria-label="Add one arrangement"
+                  disabled={quantity >= 6}
+                  onClick={() => setQuantity((current) => Math.min(6, current + 1))}
+                >
+                  <PlusIcon />
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <p className="mt-5 text-sm text-muted-foreground">
+              Small is {formatMoney(7500)}. Large is {formatMoney(20000)}.
+            </p>
+          )}
 
           <div className="mt-6 border-t border-border pt-6">
             <Label htmlFor={`${formId}-ready-date`}>Ready for pickup</Label>
@@ -508,7 +498,7 @@ export function WalkInOrder() {
               <Textarea
                 id={`${formId}-note`}
                 name="note"
-                placeholder="Wrap, a card, or the colors to keep."
+                placeholder="Colors to lean toward, or a card to include."
                 className="mt-2 min-h-24 bg-white"
               />
             </div>
@@ -521,9 +511,9 @@ export function WalkInOrder() {
             Set pickup and send order
           </Button>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            This opens an email to {studio.email} with the stems, the total,
-            and the time the flowers will be ready. Nothing is stored on the
-            website.
+            This opens an email to {studio.email} with the size, the total,
+            and the time the arrangement will be ready. Nothing is stored on
+            the website.
           </p>
         </form>
       </aside>
@@ -532,7 +522,7 @@ export function WalkInOrder() {
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4">
           <div>
             <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-              {count} stem{count === 1 ? "" : "s"}
+              {size ? `${size.name} × ${quantity}` : "No size yet"}
             </p>
             <p className="font-heading text-2xl tracking-tight">{formatMoney(total)}</p>
           </div>

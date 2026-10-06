@@ -48,7 +48,7 @@ export function SiteHeader() {
           render={<Link href="/order" />}
           className="hidden h-10 rounded-md px-4 lg:inline-flex"
         >
-          Order stems
+          Order harvest
         </Button>
 
         <Sheet>
@@ -99,7 +99,7 @@ export function SiteHeader() {
                 render={<Link href="/order" className="block" />}
               >
                 <Button className="h-12 w-full rounded-md text-base">
-                  Order stems
+                  Order harvest
                 </Button>
               </SheetClose>
             </div>
