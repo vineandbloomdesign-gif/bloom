@@ -60,8 +60,10 @@ const jsonLd = {
   telephone: studio.phoneHref.replace("tel:", ""),
   address: {
     "@type": "PostalAddress",
+    streetAddress: studio.street,
     addressLocality: studio.city,
-    addressRegion: "CA",
+    addressRegion: studio.regionCode,
+    postalCode: studio.postalCode,
     addressCountry: "US",
   },
   areaServed: "Sonoma County",

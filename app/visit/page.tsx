@@ -29,8 +29,11 @@ export default function VisitPage() {
               <dt className="text-[0.68rem] uppercase tracking-[0.16em] text-primary">
                 Location
               </dt>
-              <dd className="mt-1 font-heading text-3xl tracking-tight">
-                {studio.mapQuery}
+              <dd className="mt-1 font-heading text-3xl leading-tight tracking-tight">
+                {studio.street}
+                <span className="mt-1 block text-xl font-sans font-normal text-muted-foreground">
+                  {studio.city}, {studio.regionCode} {studio.postalCode}
+                </span>
               </dd>
             </div>
             <div>

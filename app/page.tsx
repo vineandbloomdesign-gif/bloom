@@ -369,7 +369,9 @@ export default function Home() {
                   Studio
                 </dt>
                 <dd className="mt-1 text-lg">
-                  {studio.city}, {studio.region}
+                  {studio.street}
+                  <br />
+                  {studio.city}, {studio.regionCode} {studio.postalCode}
                 </dd>
               </div>
               <div>

@@ -21,7 +21,7 @@ Most of the words live in [`lib/studio.ts`](lib/studio.ts):
 
 The inquiry form does not send mail from a server. It opens the visitor’s email app with the note addressed to `vineandbloomdesign@gmail.com`, and it keeps a copy of the note on the page if the app does not open. The studio phone is (707) 321-1296.
 
-The visit page is `/visit`. It shows a Google map of Healdsburg, the studio phone, and the studio email. Change the mapped place with `studio.mapQuery` in `lib/studio.ts` when the studio has a street address.
+The visit page is `/visit`. It shows a Google map of 20 Healdsburg Ave, Healdsburg, CA 95448, the studio phone, and the studio email. The street address lives on `studio` in `lib/studio.ts`.
 
 Walk-in orders live at `/order`. Stem prices are in [`lib/stems.ts`](lib/stems.ts). The page totals each stem, and the ready time is limited to Tuesday–Saturday, 10:00 AM–5:00 PM Pacific. Placing an order opens an email to the studio with the slip. Nothing is stored on the website.
 

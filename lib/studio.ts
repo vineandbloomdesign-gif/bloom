@@ -22,21 +22,24 @@
 export const studio = {
   name: "Vine&Bloom",
   descriptor: "Floral design studio",
+  street: "20 Healdsburg Ave",
   city: "Healdsburg",
   region: "California",
+  regionCode: "CA",
+  postalCode: "95448",
   email: "vineandbloomdesign@gmail.com",
   phone: "(707) 321-1296",
   phoneHref: "tel:+17073211296",
   hours: "Tuesday–Saturday, by appointment",
   area: "Healdsburg and the valleys nearby",
   memorialLine: "Loved by many, forgotten by none.",
-  mapQuery: "Healdsburg, California",
+  mapQuery: "20 Healdsburg Ave, Healdsburg, CA 95448",
 } as const
 
 const mapQuery = encodeURIComponent(studio.mapQuery)
 
 export const mapLinks = {
-  embed: `https://maps.google.com/maps?q=${mapQuery}&z=14&hl=en&output=embed`,
+  embed: `https://maps.google.com/maps?q=${mapQuery}&z=16&hl=en&output=embed`,
   open: `https://www.google.com/maps/search/?api=1&query=${mapQuery}`,
 } as const
 
