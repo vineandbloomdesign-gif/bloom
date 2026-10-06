@@ -256,13 +256,14 @@ export function WeddingInquiry() {
                 <ul className="mt-4 space-y-3 border-t border-border pt-4">
                   {pkg.pieces.map((piece) => {
                     const count = pieceCount(piece, counts)
+                    const titled = piece.name !== pkg.name
                     return (
                       <li
                         key={piece.id}
                         className="flex items-center justify-between gap-4"
                       >
                         <span>
-                          <span className="block text-sm">{piece.name}</span>
+                          {titled ? <span className="block text-sm">{piece.name}</span> : null}
                           <span className="mt-0.5 block text-sm text-muted-foreground">
                             {piece.copy}
                           </span>
