@@ -15,6 +15,21 @@ export type OrderTicket = {
   ready: string
   note: string
   lines: OrderLine[]
+  place?: string
+}
+
+export type OrderCopy = {
+  title: string
+  when: string
+  count: string
+  subject: string
+}
+
+const harvestCopy: OrderCopy = {
+  title: "Seasonal harvest",
+  when: "Ready for pickup",
+  count: "Arrangements",
+  subject: "harvest",
 }
 
 const CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
@@ -34,22 +49,24 @@ export function orderTotal(lines: OrderLine[]) {
   return lines.reduce((sum, line) => sum + line.price * line.quantity, 0)
 }
 
-export function composeOrder(ticket: OrderTicket) {
+export function composeOrder(ticket: OrderTicket, copy: OrderCopy = harvestCopy) {
   const lines = ticket.lines.map((line) => {
     const label = `${line.name} × ${line.quantity}`
     const amount = formatMoney(line.price * line.quantity)
     return `${label.padEnd(28, " ")}${amount}`
   })
   const note = ticket.note.trim()
+  const place = ticket.place?.trim()
   return [
-    `Seasonal harvest ${ticket.code}`,
+    `${copy.title} ${ticket.code}`,
     `Name: ${ticket.name}`,
     `Phone: ${ticket.phone}`,
-    `Ready for pickup: ${ticket.ready}`,
+    `${copy.when}: ${ticket.ready}`,
+    place ? `Place: ${place}` : "",
     "",
     ...lines,
     "",
-    `Arrangements: ${lineCount(ticket.lines)}`,
+    `${copy.count}: ${lineCount(ticket.lines)}`,
     `Total: ${formatMoney(orderTotal(ticket.lines))}`,
     note ? `\nNote: ${note}` : "",
   ]
@@ -58,8 +75,12 @@ export function composeOrder(ticket: OrderTicket) {
     .trim()
 }
 
-export function orderMailto(ticket: OrderTicket, body: string) {
-  const subject = `Vine&Bloom harvest ${ticket.code} · ready ${ticket.ready}`
+export function orderMailto(
+  ticket: OrderTicket,
+  body: string,
+  copy: OrderCopy = harvestCopy
+) {
+  const subject = `Vine&Bloom ${copy.subject} ${ticket.code} · ${ticket.ready}`
   return `mailto:${studio.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 

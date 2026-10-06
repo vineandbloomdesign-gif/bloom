@@ -47,7 +47,7 @@ export const mapLinks = {
 export const nav = [
   { href: "/about", label: "About" },
   { href: "/#services", label: "Services" },
-  { href: "/#memorial", label: "Memorial" },
+  { href: "/memorial", label: "Memorial" },
   { href: "/#seasons", label: "Seasons" },
   { href: "/#mood", label: "Mood" },
   { href: "/order", label: "Order" },

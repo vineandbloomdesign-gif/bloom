@@ -234,10 +234,10 @@ export default function Home() {
             </div>
             <Button
               nativeButton={false}
-              render={<a href="#visit" />}
+              render={<Link href="/memorial" />}
               className="mt-8 h-12 rounded-md px-6 text-base hover:bg-wine-deep"
             >
-              Plan a memorial
+              Order sympathy flowers
             </Button>
           </div>
         </div>
