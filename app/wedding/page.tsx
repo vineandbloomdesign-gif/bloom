@@ -2,11 +2,16 @@ import type { Metadata } from "next"
 import Image from "next/image"
 
 import { WeddingInquiry } from "@/components/wedding-inquiry"
+import { formatMoney } from "@/lib/arrangements"
 import { studio } from "@/lib/studio"
+import { weddingPackages } from "@/lib/wedding"
+
+const basic = weddingPackages[0]
+const custom = weddingPackages[1]
 
 export const metadata: Metadata = {
   title: "Weddings · Vine&Bloom",
-  description: `Wedding flowers from Vine&Bloom in ${studio.city}. A basic package with a bridal bouquet, bridesmaid bouquets, and boutonnieres, plus table arrangements, bar arrangements, and backdrop pieces.`,
+  description: `Wedding flowers from Vine&Bloom in ${studio.city}. A basic package starts at ${formatMoney(basic.startsAt)} for the bridal bouquet, bridesmaid bouquets, and boutonnieres. A custom wedding starts at ${formatMoney(custom.startsAt)}.`,
 }
 
 export default function WeddingPage() {
@@ -33,9 +38,9 @@ export default function WeddingPage() {
             Flowers for the <em className="font-light italic">wedding.</em>
           </h1>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            Start with the basic package: a bridal bouquet, bridesmaid
-            bouquets, and boutonnieres. Add table arrangements, bar
-            arrangements, and backdrop pieces as the day needs them.
+            The basic package starts at {formatMoney(basic.startsAt)}: a bridal
+            bouquet, bridesmaid bouquets, and boutonnieres. A custom wedding
+            starts at {formatMoney(custom.startsAt)}.
           </p>
         </div>
       </section>

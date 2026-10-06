@@ -88,7 +88,7 @@ export const services = [
     number: "01",
     title: "Weddings",
     href: "/wedding",
-    copy: "A basic package for the bridal bouquet, bridesmaid bouquets, and boutonnieres. Add table arrangements, the bar, and backdrop pieces.",
+    copy: "A basic package starts at $1,500 for the bridal bouquet, bridesmaid bouquets, and boutonnieres. A custom wedding starts at $4,000.",
   },
   {
     number: "02",

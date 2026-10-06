@@ -25,7 +25,7 @@ The about page is `/about`. It is Grace Hayes’s story of Vine & Bloom, in her 
 
 The visit page is `/visit`. It shows a Google map of 20 Healdsburg Ave, Healdsburg, CA 95448, the studio phone, and the studio email. The street address lives on `studio` in `lib/studio.ts`.
 
-Wedding packages live at `/wedding`. The basic package is a bridal bouquet, bridesmaid bouquets, and boutonnieres. Table arrangements, bar arrangements, and backdrop pieces are separate packages. A request opens an email to the studio. Prices are confirmed by reply, not listed on the page.
+Wedding packages live at `/wedding`. The basic package starts at $1,500 and includes a bridal bouquet, bridesmaid bouquets, and boutonnieres. The custom wedding package starts at a $4,000 minimum and includes table arrangements, bar arrangements, and backdrop pieces. A request opens an email to the studio. Nothing is charged on the page.
 
 Sympathy orders live at `/memorial`. Hearts, crosses, and circle wreaths are priced in [`lib/sympathy.ts`](lib/sympathy.ts) from $250 to a $1,000 full deluxe. A full deluxe casket spray is $1,500.
 

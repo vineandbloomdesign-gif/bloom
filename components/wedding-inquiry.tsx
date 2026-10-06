@@ -11,6 +11,7 @@ import { studio } from "@/lib/studio"
 import { requestWedding } from "@/lib/wedding-request"
 import {
   defaultWeddingCounts,
+  packagePriceLabel,
   pieceCount,
   weddingPackages,
   type WeddingCountKey,
@@ -26,6 +27,7 @@ export function WeddingInquiry() {
   const opened = useRef(false)
   const [state, formAction, pending] = useActionState(requestWedding, null)
   const [counts, setCounts] = useState(defaultWeddingCounts)
+  const [chosen, setChosen] = useState<Record<string, boolean>>({ basic: true })
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
@@ -96,6 +98,7 @@ export function WeddingInquiry() {
             {request.packages.map((pkg) => (
               <li key={pkg.name}>
                 <p className="font-heading text-2xl tracking-tight">{pkg.name}</p>
+                <p className="text-sm text-primary">{pkg.priceLabel}</p>
                 <ul className="mt-2 space-y-1 text-muted-foreground">
                   {pkg.lines.map((line) => (
                     <li key={line.name}>
@@ -166,8 +169,8 @@ export function WeddingInquiry() {
           </p>
         ) : (
           <p className="mt-3 text-sm text-muted-foreground">
-            The basic package covers the wedding party. Add tables, the bar, and
-            backdrop pieces for the rest of the day.
+            The basic package is {packagePriceLabel(weddingPackages[0]).toLowerCase()}.
+            The custom package is {packagePriceLabel(weddingPackages[1]).toLowerCase()}.
           </p>
         )}
         <fieldset className="mt-4 grid gap-3">
@@ -184,13 +187,24 @@ export function WeddingInquiry() {
                   name="package"
                   value={pkg.id}
                   defaultChecked={pkg.id === "basic"}
+                  onChange={(event) =>
+                    setChosen((current) => ({
+                      ...current,
+                      [pkg.id]: event.target.checked,
+                    }))
+                  }
                 />
-                <span>
-                  <span className="block font-heading text-2xl tracking-tight">
-                    {pkg.name}
+                <span className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                  <span>
+                    <span className="block font-heading text-2xl tracking-tight">
+                      {pkg.name}
+                    </span>
+                    <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">
+                      {pkg.copy}
+                    </span>
                   </span>
-                  <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">
-                    {pkg.copy}
+                  <span className="shrink-0 font-heading text-xl tracking-tight text-primary sm:text-right">
+                    {packagePriceLabel(pkg)}
                   </span>
                 </span>
               </label>
@@ -274,9 +288,18 @@ export function WeddingInquiry() {
           </p>
           <h2 className="mt-3 font-heading text-3xl tracking-tight">Tell us the day.</h2>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            We confirm the flowers and the cost by email. Nothing is charged on
-            this page.
+            We confirm the flowers by email. Nothing is charged on this page.
           </p>
+          <ul className="mt-5 space-y-2 border-b border-border pb-5">
+            {weddingPackages.filter((pkg) => chosen[pkg.id]).map((pkg) => (
+              <li key={pkg.id} className="flex items-baseline justify-between gap-4">
+                <span className="text-sm">{pkg.name}</span>
+                <span className="font-heading text-lg tracking-tight text-primary">
+                  {packagePriceLabel(pkg)}
+                </span>
+              </li>
+            ))}
+          </ul>
 
           <div className="mt-6">
             <Label htmlFor={`${formId}-date`}>Wedding day</Label>

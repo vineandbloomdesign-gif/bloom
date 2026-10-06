@@ -60,7 +60,7 @@ export async function requestWedding(
   const errors: WeddingFormErrors = {}
 
   if (selected.length === 0) {
-    errors.packages = "Choose the basic package, or add tables, the bar, or a backdrop."
+    errors.packages = "Choose the basic package or the custom package."
   }
   const dateIssue = validateWeddingDate(weddingDate, new Date())
   if (dateIssue) errors.date = weddingDateMessage(dateIssue)

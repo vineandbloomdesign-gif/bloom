@@ -1,3 +1,4 @@
+import { formatMoney } from "@/lib/arrangements"
 import { orderCode } from "@/lib/order"
 import { studio } from "@/lib/studio"
 
@@ -23,15 +24,20 @@ export type WeddingPackage = {
   id: string
   name: string
   copy: string
+  /** Starting price in cents. */
+  startsAt: number
+  /** Custom work is quoted from this amount. */
+  minimum?: boolean
   pieces: WeddingPiece[]
 }
 
-/** The basic package is the wedding party. The others are added as the day needs them. */
+/** Basic starts at $1,500. A custom wedding starts at a $4,000 minimum. */
 export const weddingPackages: WeddingPackage[] = [
   {
     id: "basic",
     name: "Basic wedding package",
-    copy: "The flowers the wedding party carries.",
+    copy: "A bridal bouquet, bridesmaid bouquets, and boutonnieres.",
+    startsAt: 150000,
     pieces: [
       {
         id: "bridal",
@@ -60,9 +66,11 @@ export const weddingPackages: WeddingPackage[] = [
     ],
   },
   {
-    id: "tables",
-    name: "Table arrangements",
-    copy: "Centerpieces and runners for the guest tables.",
+    id: "custom",
+    name: "Custom wedding package",
+    copy: "Table arrangements, bar arrangements, and backdrop pieces, designed for the day.",
+    startsAt: 400000,
+    minimum: true,
     pieces: [
       {
         id: "tables",
@@ -72,13 +80,6 @@ export const weddingPackages: WeddingPackage[] = [
         min: 1,
         max: 40,
       },
-    ],
-  },
-  {
-    id: "bar",
-    name: "Bar arrangements",
-    copy: "Flowers for the bar.",
-    pieces: [
       {
         id: "bar",
         name: "Bar arrangements",
@@ -87,17 +88,10 @@ export const weddingPackages: WeddingPackage[] = [
         min: 1,
         max: 6,
       },
-    ],
-  },
-  {
-    id: "backdrop",
-    name: "Backdrop pieces",
-    copy: "Florals for an arch, a wall, or the place guests take a photograph.",
-    pieces: [
       {
         id: "backdrop",
         name: "Backdrop pieces",
-        copy: "How many separate pieces the backdrop needs.",
+        copy: "Florals for an arch, a wall, or the place guests take a photograph.",
         countKey: "backdrop",
         min: 1,
         max: 8,
@@ -105,6 +99,12 @@ export const weddingPackages: WeddingPackage[] = [
     ],
   },
 ]
+
+export function packagePriceLabel(pkg: WeddingPackage) {
+  const amount = formatMoney(pkg.startsAt)
+  if (pkg.minimum) return `Starting at ${amount} minimum`
+  return `Starting at ${amount}`
+}
 
 export const defaultWeddingCounts: Record<WeddingCountKey, number> = {
   bridesmaids: 1,
@@ -121,6 +121,7 @@ export type WeddingLine = {
 
 export type WeddingSelection = {
   name: string
+  priceLabel: string
   lines: WeddingLine[]
 }
 
@@ -157,6 +158,7 @@ export function selectionFor(
 ): WeddingSelection {
   return {
     name: pkg.name,
+    priceLabel: packagePriceLabel(pkg),
     lines: pkg.pieces
       .map((piece) => ({
         name: piece.name,
@@ -197,7 +199,7 @@ export function formatWeddingDay(date: string) {
 
 export function composeWedding(request: WeddingRequest) {
   const blocks = request.packages.flatMap((pkg) => [
-    pkg.name,
+    `${pkg.name} — ${pkg.priceLabel}`,
     ...pkg.lines.map((line) => `  ${line.name} × ${line.quantity}`),
     "",
   ])
