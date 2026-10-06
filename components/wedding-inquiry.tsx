@@ -102,7 +102,7 @@ export function WeddingInquiry() {
                 <ul className="mt-2 space-y-1 text-muted-foreground">
                   {pkg.lines.map((line) => (
                     <li key={line.name}>
-                      {line.name} × {line.quantity}
+                      {line.counted ? `${line.name} × ${line.quantity}` : line.name}
                     </li>
                   ))}
                 </ul>
@@ -206,6 +206,7 @@ export function WeddingInquiry() {
                   </span>
                 </span>
               </label>
+              {pkg.quantities === false ? null : (
               <ul className="mt-4 hidden space-y-3 border-t border-border pt-4 group-has-[:checked]:block">
                 {pkg.pieces.map((piece) => {
                   const count = piece.countKey ? pieceCount(piece, counts) : piece.fixed ?? 0
@@ -221,7 +222,7 @@ export function WeddingInquiry() {
                           {piece.copy}
                         </span>
                       </span>
-                      {piece.countKey ? (
+                      {pkg.quantities !== false && piece.countKey ? (
                         <span className="flex shrink-0 items-center gap-1.5">
                           <Button
                             type="button"
@@ -265,15 +266,17 @@ export function WeddingInquiry() {
                             <PlusIcon />
                           </Button>
                         </span>
-                      ) : (
+                      ) : null}
+                      {pkg.quantities !== false && piece.fixed != null ? (
                         <span className="shrink-0 font-heading text-xl text-primary tabular-nums">
                           {piece.fixed}
                         </span>
-                      )}
+                      ) : null}
                     </li>
                   )
                 })}
               </ul>
+              )}
             </div>
           ))}
         </fieldset>

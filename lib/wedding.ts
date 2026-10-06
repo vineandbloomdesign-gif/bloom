@@ -28,6 +28,8 @@ export type WeddingPackage = {
   startsAt: number
   /** Custom work is quoted from this amount. */
   minimum?: boolean
+  /** When false, the package lists what is included and does not ask for a count. */
+  quantities?: boolean
   pieces: WeddingPiece[]
 }
 
@@ -38,6 +40,7 @@ export const weddingPackages: WeddingPackage[] = [
     name: "Basic wedding package",
     copy: "A bridal bouquet, bridesmaid bouquets, and boutonnieres.",
     startsAt: 150000,
+    quantities: false,
     pieces: [
       {
         id: "bridal",
@@ -117,6 +120,7 @@ export const defaultWeddingCounts: Record<WeddingCountKey, number> = {
 export type WeddingLine = {
   name: string
   quantity: number
+  counted: boolean
 }
 
 export type WeddingSelection = {
@@ -162,9 +166,10 @@ export function selectionFor(
     lines: pkg.pieces
       .map((piece) => ({
         name: piece.name,
-        quantity: pieceCount(piece, counts),
+        quantity: pkg.quantities === false ? 0 : pieceCount(piece, counts),
+        counted: pkg.quantities !== false,
       }))
-      .filter((line) => line.quantity > 0),
+      .filter((line) => !line.counted || line.quantity > 0),
   }
 }
 
@@ -200,7 +205,9 @@ export function formatWeddingDay(date: string) {
 export function composeWedding(request: WeddingRequest) {
   const blocks = request.packages.flatMap((pkg) => [
     `${pkg.name} — ${pkg.priceLabel}`,
-    ...pkg.lines.map((line) => `  ${line.name} × ${line.quantity}`),
+    ...pkg.lines.map((line) =>
+      line.counted ? `  ${line.name} × ${line.quantity}` : `  ${line.name}`
+    ),
     "",
   ])
   const note = request.note.trim()
