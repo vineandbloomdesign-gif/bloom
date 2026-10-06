@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 
+import { publicPath } from "@/lib/public-path"
 import { founder, story, studio } from "@/lib/studio"
 
 export const metadata: Metadata = {
@@ -35,7 +36,7 @@ export default function AboutPage() {
         <div className="lg:col-span-5">
           <div className="relative mx-auto aspect-square w-full max-w-sm">
             <Image
-              src="/images/logo.png"
+              src={publicPath("/images/logo.png")}
               alt="Vine and Bloom barrel mark, Healdsburg, California, established 2026."
               fill
               priority
@@ -75,7 +76,7 @@ export default function AboutPage() {
       <section className="px-5 pb-16 md:px-8 md:pb-24">
         <div className="relative mx-auto min-h-[24rem] w-full max-w-6xl overflow-hidden">
           <Image
-            src="/images/sonoma.jpg"
+            src={publicPath("/images/sonoma.jpg")}
             alt="Autumn vineyard rows in Sonoma County, with yellow vines and a forested ridge behind them."
             fill
             sizes="(min-width: 1152px) 1152px, 100vw"

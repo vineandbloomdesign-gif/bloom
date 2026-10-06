@@ -4,6 +4,7 @@ import Link from "next/link"
 import { InquiryForm } from "@/components/inquiry-form"
 import { Button } from "@/components/ui/button"
 import { SeasonGrid } from "@/components/season-grid"
+import { publicPath } from "@/lib/public-path"
 import { frames, questions, services, steps, studio, valleys } from "@/lib/studio"
 
 export default function Home() {
@@ -46,7 +47,7 @@ export default function Home() {
         <figure className="lg:col-span-6">
           <div className="relative aspect-[4/5] overflow-hidden bg-muted">
             <Image
-              src="/images/hero.jpg"
+              src={publicPath("/images/hero.jpg")}
               alt="A hand-held bouquet of cream and apricot roses, purple blooms, eucalyptus, and red berries."
               fill
               priority
@@ -78,7 +79,7 @@ export default function Home() {
         <div className="lg:col-span-5">
           <div className="relative aspect-[4/5] overflow-hidden bg-muted">
             <Image
-              src="/images/jar.jpg"
+              src={publicPath("/images/jar.jpg")}
               alt="A jar of blush garden roses, peony, and eucalyptus tied with a silk ribbon, sitting on a wooden table."
               fill
               sizes="(min-width: 1024px) 38vw, 100vw"
@@ -137,7 +138,7 @@ export default function Home() {
       <section className="px-5 md:px-8">
         <div className="relative mx-auto min-h-[28rem] w-full max-w-6xl overflow-hidden">
           <Image
-            src="/images/sonoma.jpg"
+            src={publicPath("/images/sonoma.jpg")}
             alt="Autumn vineyard rows in Sonoma County, with yellow vines and a forested ridge behind them."
             fill
             sizes="(min-width: 1152px) 1152px, 100vw"
@@ -212,7 +213,7 @@ export default function Home() {
           <div className="lg:col-span-5">
             <div className="relative aspect-[5/6] overflow-hidden bg-muted">
               <Image
-                src="/images/memorial-wreath.jpg"
+                src={publicPath("/images/memorial-wreath.jpg")}
                 alt="A round sympathy wreath of pink lilies, roses, and chrysanthemums on a wooden easel in a garden."
                 fill
                 sizes="(min-width: 1024px) 38vw, 100vw"
@@ -286,7 +287,7 @@ export default function Home() {
             <li key={frame.src} className={frame.className}>
               <figure className={`relative overflow-hidden bg-muted ${frame.aspect}`}>
                 <Image
-                  src={frame.src}
+                  src={publicPath(frame.src)}
                   alt={frame.alt}
                   fill
                   sizes="(min-width: 1024px) 60vw, 100vw"

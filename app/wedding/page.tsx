@@ -3,6 +3,7 @@ import Image from "next/image"
 
 import { WeddingInquiry } from "@/components/wedding-inquiry"
 import { formatMoney } from "@/lib/arrangements"
+import { publicPath } from "@/lib/public-path"
 import { studio } from "@/lib/studio"
 import { weddingPackages } from "@/lib/wedding"
 
@@ -21,7 +22,7 @@ export default function WeddingPage() {
         <div className="lg:col-span-5">
           <div className="relative aspect-[3/4] overflow-hidden bg-muted">
             <Image
-              src="/images/wedding-table.jpg"
+              src={publicPath("/images/wedding-table.jpg")}
               alt="A long wooden wedding table in a garden, set with a floral runner of red roses, eucalyptus, and candles under string lights."
               fill
               priority

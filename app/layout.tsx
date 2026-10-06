@@ -3,6 +3,7 @@ import { Fraunces, Outfit } from "next/font/google"
 
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
+import { publicPath } from "@/lib/public-path"
 import { founder, mapLinks, studio } from "@/lib/studio"
 
 import "./globals.css"
@@ -23,10 +24,14 @@ const fraunces = Fraunces({
 const description =
   "Vine&Bloom is a floral design studio in Healdsburg, California. Seasonal flowers for winery weddings, estate gatherings, private dinners, and weekly arrangements."
 
+const metadataBase = new URL(
+  process.env.__NEXT_ROUTER_BASEPATH
+    ? "https://vineandbloomdesign-gif.github.io"
+    : (process.env.NEXT_PUBLIC_SITE_URL ?? "http://127.0.0.1:43123")
+)
+
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "http://127.0.0.1:43123"
-  ),
+  metadataBase,
   title: "Vine&Bloom · Floral design in Healdsburg",
   description,
   keywords: [
@@ -42,7 +47,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/images/og.jpg",
+        url: publicPath("/images/og.jpg"),
         width: 1200,
         height: 630,
         alt: "Autumn vineyard rows in Sonoma County",
