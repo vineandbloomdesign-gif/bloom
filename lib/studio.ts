@@ -17,6 +17,7 @@
  * - golden: photo-1763786470689-5ff88c985885
  * - table: photo-1519225421980-715cb0215aed
  * - memorial-wreath.jpg: sympathy wreath for memorial services
+ * - wedding-table.jpg: garden reception table for wedding packages
  */
 
 export const studio = {
@@ -47,6 +48,7 @@ export const mapLinks = {
 export const nav = [
   { href: "/about", label: "About" },
   { href: "/#services", label: "Services" },
+  { href: "/wedding", label: "Weddings" },
   { href: "/memorial", label: "Memorial" },
   { href: "/#seasons", label: "Seasons" },
   { href: "/#mood", label: "Mood" },
@@ -85,7 +87,8 @@ export const services = [
   {
     number: "01",
     title: "Weddings",
-    copy: "Ceremonies, aisles, and the tables that follow. Lawns, barns, and ridges across Dry Creek, Alexander Valley, and the Russian River.",
+    href: "/wedding",
+    copy: "A basic package for the bridal bouquet, bridesmaid bouquets, and boutonnieres. Add table arrangements, the bar, and backdrop pieces.",
   },
   {
     number: "02",

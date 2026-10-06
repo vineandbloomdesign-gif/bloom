@@ -188,7 +188,16 @@ export default function Home() {
                 {service.number}
               </span>
               <h3 className="font-heading text-3xl tracking-tight md:col-span-4">
-                {service.title}
+                {"href" in service ? (
+                  <Link
+                    href={service.href}
+                    className="underline decoration-border underline-offset-4 hover:decoration-primary"
+                  >
+                    {service.title}
+                  </Link>
+                ) : (
+                  service.title
+                )}
               </h3>
               <p className="text-base leading-relaxed text-muted-foreground md:col-span-6">
                 {service.copy}
