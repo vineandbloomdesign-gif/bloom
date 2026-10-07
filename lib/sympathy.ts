@@ -35,7 +35,7 @@ export const sympathyForms: SympathyForm[] = [
   {
     id: "casket",
     name: "Casket spray",
-    copy: "Flowers laid across the casket. Full deluxe is $1,500.",
+    copy: "Full deluxe casket spray with funeral package. $1,500.",
   },
 ]
 
