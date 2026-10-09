@@ -71,6 +71,16 @@ export default function AboutPage() {
             </p>
           </div>
         </div>
+        <figure className="mx-auto w-full max-w-md px-5 pb-16 md:px-8 md:pb-24">
+          <Image
+            src={publicPath("/images/about-founder.jpg")}
+            alt="Grace Hayes standing among the grapevines, with the hills behind her."
+                width={590}
+                height={1080}
+            sizes="(min-width: 448px) 28rem, 100vw"
+            className="h-auto w-full"
+          />
+        </figure>
       </section>
 
       <section className="px-5 pb-16 md:px-8 md:pb-24">
