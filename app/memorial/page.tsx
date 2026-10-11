@@ -1,7 +1,9 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 
 import { SympathyOrder } from "@/components/sympathy-order"
 import { formatMoney } from "@/lib/arrangements"
+import { publicPath } from "@/lib/public-path"
 import { studio } from "@/lib/studio"
 import { casketDeluxePrice, sympathySizes } from "@/lib/sympathy"
 
@@ -16,21 +18,35 @@ export const metadata: Metadata = {
 export default function MemorialOrderPage() {
   return (
     <main id="content" className="flex-1">
-      <section className="no-print mx-auto w-full max-w-6xl px-5 pt-12 pb-8 md:px-8 md:pt-16">
-        <p className="text-[0.72rem] font-medium uppercase tracking-[0.22em] text-primary">
-          Memorial · {studio.city}
-        </p>
-        <h1 className="mt-4 max-w-[12em] font-heading text-[clamp(3rem,6vw,5.2rem)] leading-[0.92] tracking-[-0.035em]">
-          Flowers for those we cherish.
-        </h1>
-        <p className="mt-5 max-w-xl font-heading text-2xl leading-snug tracking-tight italic text-foreground">
-          {studio.memorialLine}
-        </p>
-        <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
-          Hearts, crosses, and circle wreaths from {formatMoney(small.price)} to{" "}
-          {formatMoney(wreathDeluxe.price)}. A full deluxe casket spray is{" "}
-          {formatMoney(casketDeluxePrice)}.
-        </p>
+      <section className="no-print mx-auto grid w-full max-w-6xl items-center gap-10 px-5 pt-12 pb-8 md:px-8 md:pt-16 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-5">
+          <div className="relative aspect-square overflow-hidden bg-muted">
+            <Image
+              src={publicPath("/images/memorial-cross.jpg")}
+              alt="A standing sympathy cross of red roses, calla lilies, and ferns on a green easel."
+              fill
+              priority
+              sizes="(min-width: 1024px) 38vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+        </div>
+        <div className="lg:col-span-6 lg:col-start-7">
+          <p className="text-[0.72rem] font-medium uppercase tracking-[0.22em] text-primary">
+            Memorial · {studio.city}
+          </p>
+          <h1 className="mt-4 max-w-[12em] font-heading text-[clamp(3rem,6vw,5.2rem)] leading-[0.92] tracking-[-0.035em]">
+            Flowers for those we cherish.
+          </h1>
+          <p className="mt-5 max-w-xl font-heading text-2xl leading-snug tracking-tight italic text-foreground">
+            {studio.memorialLine}
+          </p>
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
+            Hearts, crosses, and circle wreaths from {formatMoney(small.price)} to{" "}
+            {formatMoney(wreathDeluxe.price)}. A full deluxe casket spray is{" "}
+            {formatMoney(casketDeluxePrice)}.
+          </p>
+        </div>
       </section>
       <SympathyOrder />
     </main>
